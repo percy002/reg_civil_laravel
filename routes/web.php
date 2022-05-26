@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('acta_nacimiento', acta_nacimientoController::class);
+// Route::resource('acta_nacimiento', acta_nacimientoController::class);

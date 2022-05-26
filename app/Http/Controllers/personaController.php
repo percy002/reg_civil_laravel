@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Acta_Nacimiento;
+use App\Models\Persona;
 use Response;
 
-class acta_nacimientoController extends Controller
+class personaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,10 @@ class acta_nacimientoController extends Controller
      */
     public function index()
     {
-        //mostrar todas las actas de nacimiento
-        $acta_nacimiento=Acta_Nacimiento::all();
-        return Response::json($acta_nacimiento);
+        //mostrar todas las personas
+        $personas=Persona::all();
+        // return Response::json($personas);
+
     }
 
     /**
@@ -27,8 +28,7 @@ class acta_nacimientoController extends Controller
      */
     public function create()
     {
-        //mostrar todas las actas de nacimiento
-
+        //
     }
 
     /**
@@ -40,6 +40,10 @@ class acta_nacimientoController extends Controller
     public function store(Request $request)
     {
         //
+        return Response::json($nuevo);
+        // $persona=new Persona();
+        // $persona->dni=$request
+
     }
 
     /**

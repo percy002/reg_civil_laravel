@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Acta_Nacimiento;
-use Response;
 
-class acta_nacimientoController extends Controller
+
+class userController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class acta_nacimientoController extends Controller
      */
     public function index()
     {
-        //mostrar todas las actas de nacimiento
-        $acta_nacimiento=Acta_Nacimiento::all();
-        return Response::json($acta_nacimiento);
+        //
     }
 
     /**
@@ -27,8 +24,7 @@ class acta_nacimientoController extends Controller
      */
     public function create()
     {
-        //mostrar todas las actas de nacimiento
-
+        //
     }
 
     /**
