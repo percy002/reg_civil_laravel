@@ -19,8 +19,8 @@ class CreateActaMatrimoniosTable extends Migration
             $table->foreignId('fk_id_novia')->constrained('personas');            
             $table->string('acta');
             $table->string('libro');
-            $table->date('fecha_registro');
-            $table->date('fecha_matrimonio');
+            $table->date('fecha_registro')->format('d-m-Y');
+            $table->date('fecha_matrimonio')->format('d-m-Y');
             $table->string('archivo');
             $table->boolean('rectificado')->nullable()->default(false);
             $table->timestamps();

@@ -17,7 +17,7 @@ class personaController extends Controller
     {
         //mostrar todas las personas
         $personas=Persona::all();
-        // return Response::json($personas);
+        return Response::json($personas);
 
     }
 
@@ -39,10 +39,18 @@ class personaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        return Response::json($nuevo);
-        // $persona=new Persona();
-        // $persona->dni=$request
+        //verificar si existe persona0
+        $persona=new Persona();
+        $persona->dni=$request->dni;
+        $persona->nombres=$request->nombres;
+        $persona->apellido_paterno=$request->apellido_paterno;
+        $persona->apellido_materno=$request->apellido_materno;
+        $persona->genero=$request->genero;
+
+        if ($persona->save()) {
+            return Response::json(array('success' => true), 200);
+        }
+        return $request;
 
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Acta_Defuncion extends Model
 {
     use HasFactory;
+    protected $table="acta_defuncions";
     protected $fillable = [
         'fk_id_fallecido',
         'acta',

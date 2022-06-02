@@ -15,11 +15,11 @@ class CreatePersonasTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('dni')->nullable();
+            $table->string('dni')->unique()->nullable();
             $table->string('apellido_paterno')->nullable();
             $table->string('apellido_materno')->nullable();
             $table->string('nombres')->nullable();
-            $table->string('genero')->nullable();
+            $table->string('sexo')->nullable();
             $table->date('fecha_nacimiento')->nullable();
             $table->timestamps();
         });

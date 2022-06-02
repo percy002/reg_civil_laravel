@@ -20,8 +20,8 @@ class CreateActaNacimientosTable extends Migration
             $table->string('libro');
             $table->foreignId('fk_id_padre')->constrained('personas')->nullable();
             $table->foreignId('fk_id_madre')->constrained('personas')->nullable();
-            $table->date('fecha_registro');
-            $table->date('fecha_nacimiento');
+            $table->date('fecha_registro')->format('d-m-Y');
+            $table->date('fecha_nacimiento')->format('d-m-Y');
             $table->string('archivo');
             $table->boolean('rectificado')->nullable()->default(false);
             $table->timestamps();

@@ -16,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/nada', function () {
+    return "nada";
+});
 
 // Route::resource('acta_nacimiento', acta_nacimientoController::class);

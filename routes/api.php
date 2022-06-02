@@ -6,6 +6,7 @@ use App\http\Controllers\acta_nacimientoController;
 use App\http\Controllers\acta_defuncionController;
 use App\http\Controllers\acta_matrimonioController;
 use App\http\Controllers\personaController;
+use App\http\Controllers\pdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,10 @@ use App\http\Controllers\personaController;
 //     return $request->user();
 // });
 
+// Route::resource('/', personaController::class);
 Route::resource('persona', personaController::class);
 Route::resource('acta_nacimiento', acta_nacimientoController::class);
-Route::resource('acta_defuncion', acta_nacimientoController::class);
-Route::resource('acta_matrimonio', acta_nacimientoController::class);
-Route::resource('acta_usuario', acta_nacimientoController::class);
+Route::resource('acta_defuncion', acta_defuncionController::class);
+Route::resource('acta_matrimonio', acta_matrimonioController::class);
+Route::resource('usuario', usuarioController::class);
+Route::post('save_pdf',[pdfController::class, 'save']);

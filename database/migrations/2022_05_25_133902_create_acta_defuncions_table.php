@@ -15,13 +15,13 @@ class CreateActaDefuncionsTable extends Migration
     {
         Schema::create('acta_defuncions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fk_id_fallecido')->constrained('personas');
+            $table->foreignId('fk_id_fallecido')->constrained('personas')->unique();
             $table->string('acta');
             $table->string('libro');
-            $table->date('fecha_registro');
-            $table->date('fecha_defuncion');
+            $table->date('fecha_registro')->format('d/m/Y');
+            $table->date('fecha_defuncion')->format('d/m/Y')->nullable();
             $table->string('archivo');
-            $table->boolean('rectificado')->nullable()->default(false);
+            $table->boolean('rectificado')->nullable()->default(0);
             $table->timestamps();
 
             
