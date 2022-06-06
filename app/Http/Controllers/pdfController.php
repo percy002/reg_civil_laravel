@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use response;
+use Response;
 
 class pdfController extends Controller
 {
     //   
     public function save(Request $request){
-        $file = $request->file("myfile")->storeAs("actasAPI",$request->file("myfile")->getClientOriginalName());
-        return $file;
+        $url_path="public/actas/Actas_Defunciones";
+        $file = $request->file("myfile")->storeAs($url_path,$request->file("myfile")->getClientOriginalName());
+        return Response::json("agregado");
     }
 }

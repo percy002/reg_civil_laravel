@@ -8,6 +8,7 @@ use App\Models\Acta_Nacimiento;
 use App\Models\Persona;
 use Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class acta_defuncionController extends Controller
 {
@@ -19,7 +20,10 @@ class acta_defuncionController extends Controller
     public function index()
     {
         //
-        $acta_defunciones=Acta_Defuncion::all();
+        $acta_defunciones=DB::table('acta_defuncions')
+        ->LeftJoin('personas','acta_defuncions.fk_id_fallecido','=','personas.id')
+        ->select(DB::raw("CONCAT(personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"),'personas.sexo', 'acta_defuncions.*')
+        ->get();;
         return Response::json($acta_defunciones);
     }
 
@@ -41,14 +45,15 @@ class acta_defuncionController extends Controller
      */
     public function store(Request $request)
     {        
-        $buscar = Persona::where("dni",$request->persona["dni"])->first();
-        // return $buscar->id;
-        $idPersona=0;
+        //buscar si ya exise persona
+        $buscar = Persona::where("dni",$request->persona["dni"])->where("dni","<>",null)->first();
+        
         if($buscar){
+            //si persona ya existe
             $idPersona = $buscar->id;
         }
         else{
-            
+            //si persona no existe
             //agregar nueva persona
             $persona = new Persona();
             $persona->dni = $request->persona["dni"];
@@ -62,7 +67,9 @@ class acta_defuncionController extends Controller
             $idPersona = $persona->id;
         }
 
-        $existe_acta=Acta_Defuncion::whereNotIn('fk_id_fallecido', 'null')->where("fk_id_fallecido",$idPersona)->first();
+        //verificar existencia del acta
+        // $existePersona=Persona::where('dni','=',$idPersona);
+        $existe_acta=Acta_Defuncion::where('fk_id_fallecido','<>', null)->where("fk_id_fallecido",$idPersona)->first();
         // return gettype($existe_acta);
         if ($idPersona && $existe_acta==null) {
             //agregar nueva acta de defuncion
@@ -71,9 +78,11 @@ class acta_defuncionController extends Controller
             $nueva_acta->libro = $request->libro;
             $nueva_acta->acta = $request->acta;
             $nueva_acta->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
-            $nueva_acta->fecha_defuncion = $request->fecha_defuncion==null? NULL: $request->fecha_defuncion->format("Y-m-d");
-            $nueva_acta->archivo = $request->archivo;
+            $nueva_acta->fecha_defuncion = $request->fecha_defuncion==null? NULL: Carbon::parse($request->fecha_defuncion)->format("Y-m-d");
+            // return $nueva_acta;
+            // dd($nueva_acta);
             $nueva_acta->rectificado = $request->rectificado;
+            $nueva_acta->archivo = $request->archivo;
             if ($nueva_acta->save()) {
                 return $nueva_acta;
                 // return Response::json(array('success' => true), 200);
@@ -101,6 +110,7 @@ class acta_defuncionController extends Controller
     public function show($id)
     {
         //
+        $acta_defuncion=Acta_Defuncion::find($id);
     }
 
     /**

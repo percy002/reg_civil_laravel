@@ -18,4 +18,6 @@ class Acta_Defuncion extends Model
         'archivo',
         'rectificado',
     ];
+
+    
 }

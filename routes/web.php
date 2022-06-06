@@ -20,4 +20,7 @@ Route::get('/nada', function () {
     return "nada";
 });
 
+Route::get('files/my-example-file.pdf', function () {
+    return response()->file($path);
+});
 // Route::resource('acta_nacimiento', acta_nacimientoController::class);

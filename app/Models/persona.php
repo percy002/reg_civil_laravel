@@ -18,4 +18,8 @@ class Persona extends Model
         'genero',
         'fecha_nacimiento',
     ];
+    public function getFullname()
+    {
+        return "{$this->dni}-{$this->apellido_paterno}-{$this->apellido_paterno}-{$this->nombres}";
+    }
 }
