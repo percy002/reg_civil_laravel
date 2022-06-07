@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Acta_Nacimiento;
-use Response;
+use App\Models\Acta_Matrimonio;
 use App\Models\Persona;
+use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class acta_nacimientoController extends Controller
+class acta_matrimonioController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +18,7 @@ class acta_nacimientoController extends Controller
      */
     public function index()
     {
-        //mostrar todas las actas de nacimiento
-        $acta_nacimiento=Acta_Nacimiento::all();
-        return Response::json($acta_nacimiento);
+        //
     }
 
     /**
@@ -30,8 +28,7 @@ class acta_nacimientoController extends Controller
      */
     public function create()
     {
-        //mostrar todas las actas de nacimiento
-
+        //
     }
 
     /**
@@ -42,61 +39,49 @@ class acta_nacimientoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // return $request;
+        // $novia=new Persona($request->novia);
+        // // $novia=$request->novia;
+        // $novia->save();
+        // return $novia;
         //buscar_novio si ya exise persona
-        $personas_not_null=Persona::where("dni", "<>", null)->get();
-        $buscar_padre = $personas_not_null->where("dni", $request->padre["dni"])->where("dni", "<>", null)->first();
+        $buscar_novio = Persona::where("dni", $request->novio["dni"])->where("dni", "<>", null)->first();
        
-        $buscar_madre = $personas_not_null->where("dni", $request->madre["dni"])->where("dni", "<>", null)->first();
+        $buscar_novia = Persona::where("dni", $request->novia["dni"])->where("dni", "<>", null)->first();
 
-        $buscar_nacido = $personas_not_null->where("dni", $request->nacido["dni"])->where("dni", "<>", null)->first();
-
-        if ($buscar_padre) {
+        if ($buscar_novio) {
             //si persona ya existe            
-            $id_padre = $buscar_padre->id;
+            $id_novio = $buscar_novio->id;
         } else {
             //si persona no existe
             //agregar nueva persona
-            $padre = new Persona($request->padre);
-            $padre->save();
-            $id_padre = $padre->id;
+            $novio = new Persona($request->novio);
+            $novio->save();
+            $id_novio = $novio->id;
         }
-        if ($buscar_madre) {
+        if ($buscar_novia) {
             # si persona ya existe
-            $id_madre = $buscar_madre->id;
+            $id_novia = $buscar_novia->id;
         } else {            
             //si persona no existe
             //agregar nueva persona
-            $madre = new Persona($request->madre);
-            $madre->save();
-            $id_madre = $madre->id;
-        }
-        if ($buscar_nacido) {
-            # si persona ya existe
-            $id_nacido = $buscar_nacido->id;
-        }
-        else{
-            //si persona no existe
-            //agregar nueva persona
-            $nacido = new Persona($request->nacido);
-            $nacido->save();
-            $id_nacido = $nacido->id;
+            $novia = new Persona($request->novia);
+            $novia->save();
+            $id_novia = $novia->id;
         }
         // return "llegaste";
         //verificar existencia del acta
-        $existe_acta = Acta_Nacimiento::where('fk_id_nacido', $id_nacido)->first();
+        $existe_acta = Acta_Matrimonio::where('fk_id_novio', $id_novio)->where("fk_id_novia", $id_novia)->first();
 
-        if (($id_padre || $id_madre || $id_nacido) && $existe_acta == null) {
-            
+        if ($id_novio && $id_novia && $existe_acta == null) {
             //agregar nueva acta de defuncion
-            $nueva_acta = new Acta_Nacimiento();
-            $nueva_acta->fk_id_nacido = $id_nacido;
-            $nueva_acta->fk_id_padre = $id_padre;
-            $nueva_acta->fk_id_madre = $id_madre;
+            $nueva_acta = new Acta_Matrimonio();
+            $nueva_acta->fk_id_novio = $id_novio;
+            $nueva_acta->fk_id_novia = $id_novia;
             $nueva_acta->libro = $request->libro;
             $nueva_acta->acta = $request->acta;
             $nueva_acta->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
-            $nueva_acta->fecha_nacimiento = $request->fecha_nacimiento == null ? NULL : Carbon::parse($request->fecha_nacimiento)->format("Y-m-d");
+            $nueva_acta->fecha_matrimonio = $request->fecha_matrimonio == null ? NULL : Carbon::parse($request->fecha_matrimonio)->format("Y-m-d");
 
             $nueva_acta->rectificado = $request->rectificado;
             $nueva_acta->archivo = $request->archivo;
@@ -110,6 +95,7 @@ class acta_nacimientoController extends Controller
             return Response::json(array('success' => true, 'mensaje' => "ya existe acta"), 200);
         }
     }
+    
 
     /**
      * Display the specified resource.

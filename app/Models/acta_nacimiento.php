@@ -11,11 +11,13 @@ class Acta_Nacimiento extends Model
     protected $table="acta_nacimientos";
 
     protected $fillable = [
-        'fk_id_fallecido',
+        'fk_id_nacido',
+        'fk_id_padre',
+        'fk_id_madre',
         'acta',
         'libro',
         'fecha_registro',
-        'fecha_defuncion',
+        'fecha_nacimiento',
         'archivo',
         'rectificado',
     ];

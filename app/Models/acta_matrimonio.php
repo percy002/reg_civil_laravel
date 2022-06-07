@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Acta_Matrimonio extends Model
 {
     use HasFactory;
-
+    protected $table="acta_matrimonios";
     protected $fillable = [
         'fk_id_novio',
         'fk_id_novia',
