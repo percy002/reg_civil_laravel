@@ -19,6 +19,14 @@ class acta_matrimonioController extends Controller
     public function index()
     {
         //
+        $acta_defunciones = DB::table('acta_matrimonios')
+            ->LeftJoin('personas as novio', 'acta_matrimonios.fk_id_novio', '=', 'novio.id')
+            ->leftJoin('personas as novia', 'acta_matrimonios.fk_id_novia', '=', 'novia.id')
+            ->select(
+                DB::raw("CONCAT_WS('',novio.dni,'-',novio.apellido_paterno,'-',novio.apellido_materno,'-',novio.nombres) as novio"),
+                DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,'-',novia.apellido_materno,'-',novia.nombres) as novia"), 'acta_matrimonios.*')
+                ->get();
+        return Response::json($acta_defunciones);
     }
 
     /**
@@ -46,7 +54,7 @@ class acta_matrimonioController extends Controller
         // return $novia;
         //buscar_novio si ya exise persona
         $buscar_novio = Persona::where("dni", $request->novio["dni"])->where("dni", "<>", null)->first();
-       
+
         $buscar_novia = Persona::where("dni", $request->novia["dni"])->where("dni", "<>", null)->first();
 
         if ($buscar_novio) {
@@ -62,7 +70,7 @@ class acta_matrimonioController extends Controller
         if ($buscar_novia) {
             # si persona ya existe
             $id_novia = $buscar_novia->id;
-        } else {            
+        } else {
             //si persona no existe
             //agregar nueva persona
             $novia = new Persona($request->novia);
@@ -95,7 +103,7 @@ class acta_matrimonioController extends Controller
             return Response::json(array('success' => true, 'mensaje' => "ya existe acta"), 200);
         }
     }
-    
+
 
     /**
      * Display the specified resource.

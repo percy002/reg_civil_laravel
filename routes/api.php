@@ -28,5 +28,5 @@ Route::resource('persona', personaController::class);
 Route::resource('acta_nacimiento', acta_nacimientoController::class);
 Route::resource('acta_defuncion', acta_defuncionController::class);
 Route::resource('acta_matrimonio', acta_matrimonioController::class);
-Route::resource('usuario', usuarioController::class);
+// Route::resource('usuario', usuarioController::class);
 Route::post('save_pdf',[pdfController::class, 'save']);

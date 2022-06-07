@@ -21,7 +21,7 @@ class acta_defuncionController extends Controller
         //
         $acta_defunciones = DB::table('acta_defuncions')
             ->LeftJoin('personas', 'acta_defuncions.fk_id_fallecido', '=', 'personas.id')
-            ->select(DB::raw("CONCAT(personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*')
+            ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*')
             ->get();;
         return Response::json($acta_defunciones);
     }
@@ -100,6 +100,8 @@ class acta_defuncionController extends Controller
     public function show($id)
     {
         //
+        $acta_defuncion=Acta_Defuncion::find($id);
+        return Response::json($acta_defuncion);
     }
 
     /**

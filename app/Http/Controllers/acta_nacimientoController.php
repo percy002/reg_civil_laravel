@@ -19,8 +19,17 @@ class acta_nacimientoController extends Controller
     public function index()
     {
         //mostrar todas las actas de nacimiento
-        $acta_nacimiento=Acta_Nacimiento::all();
-        return Response::json($acta_nacimiento);
+        $acta_defunciones = DB::table('acta_nacimientos')
+            ->LeftJoin('personas as nacido', 'acta_nacimientos.fk_id_nacido', '=', 'nacido.id')
+            ->LeftJoin('personas as padre', 'acta_nacimientos.fk_id_padre', '=', 'padre.id')
+            ->LeftJoin('personas as madre', 'acta_nacimientos.fk_id_madre', '=', 'madre.id')
+            ->select(
+                DB::raw("CONCAT_WS('',nacido.dni,'-',nacido.apellido_paterno,'-',nacido.apellido_materno,'-',nacido.nombres) as nacido"),
+                DB::raw("CONCAT_WS('',padre.dni,'-',padre.apellido_paterno,'-',padre.apellido_materno,'-',padre.nombres) as padre"),
+                DB::raw("CONCAT_WS('',madre.dni,'-',madre.apellido_paterno,'-',madre.apellido_materno,'-',madre.nombres) as madre"),
+                'acta_nacimientos.*')
+            ->get();
+        return Response::json($acta_defunciones);
     }
 
     /**
