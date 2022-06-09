@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Persona;
 
 class Acta_Defuncion extends Model
 {
@@ -18,6 +19,16 @@ class Acta_Defuncion extends Model
         'archivo',
         'rectificado',
     ];
+
+    /**
+     * Get the user that owns the acta_defuncion
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_fallecido','id');
+    }
 
     
 }

@@ -101,7 +101,7 @@ class acta_defuncionController extends Controller
     {
         //
         $acta_defuncion=Acta_Defuncion::find($id);
-        return Response::json($acta_defuncion);
+        return Response::json(array("acta"=> $acta_defuncion,"persona"=>$acta_defuncion->persona));
     }
 
     /**
