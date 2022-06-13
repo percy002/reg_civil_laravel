@@ -114,6 +114,8 @@ class acta_matrimonioController extends Controller
     public function show($id)
     {
         //
+        $acta_matrimonio=Acta_Matrimonio::find($id);
+        return Response::json(array("acta"=> $acta_matrimonio,"novio"=>$acta_matrimonio->novio,"novia"=> $acta_matrimonio->novia));
     }
 
     /**

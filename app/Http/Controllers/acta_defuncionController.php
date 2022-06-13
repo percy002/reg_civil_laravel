@@ -125,6 +125,25 @@ class acta_defuncionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $persona = Persona::find($request->id_persona);
+        // $persona = $request->persona;
+        $persona->fill($request->persona)->save();
+
+
+        $acta_defuncion = Acta_defuncion::find($id);
+        $acta_defuncion->fk_id_fallecido = $persona->id;
+        $acta_defuncion->libro = $request->libro;
+        $acta_defuncion->acta = $request->acta;
+        $acta_defuncion->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
+        $acta_defuncion->fecha_defuncion = $request->fecha_defuncion == null ? NULL : Carbon::parse($request->fecha_defuncion)->format("Y-m-d");
+
+        $acta_defuncion->rectificado = $request->rectificado;
+        $acta_defuncion->archivo = $request->archivo;
+
+        $acta_defuncion->update();
+
+        return $acta_defuncion;
+
     }
 
     /**

@@ -21,4 +21,17 @@ class Acta_Nacimiento extends Model
         'archivo',
         'rectificado',
     ];
+
+    public function nacido()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_nacido','id');
+    }
+    public function padre()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_padre','id');
+    }
+    public function madre()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_madre','id');
+    }
 }

@@ -129,6 +129,8 @@ class acta_nacimientoController extends Controller
     public function show($id)
     {
         //
+        $acta_nacimiento=Acta_Nacimiento::find($id);
+        return Response::json(array("acta"=> $acta_nacimiento,"nacido"=>$acta_nacimiento->nacido,"padre"=> $acta_nacimiento->padre,"madre"=> $acta_nacimiento->madre));
     }
 
     /**

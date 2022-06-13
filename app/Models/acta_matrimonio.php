@@ -19,4 +19,12 @@ class Acta_Matrimonio extends Model
         'archivo',
         'rectificado',
     ];
+    public function novio()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_novio','id');
+    }
+    public function novia()
+    {
+        return $this->belongsTo(Persona::class, 'fk_id_novia','id');
+    }
 }
