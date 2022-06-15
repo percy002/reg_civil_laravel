@@ -20,6 +20,7 @@ class Acta_Nacimiento extends Model
         'fecha_nacimiento',
         'archivo',
         'rectificado',
+        'sexo'
     ];
 
     public function nacido()

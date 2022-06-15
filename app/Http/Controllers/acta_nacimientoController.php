@@ -27,7 +27,8 @@ class acta_nacimientoController extends Controller
                 DB::raw("CONCAT_WS('',nacido.dni,'-',nacido.apellido_paterno,'-',nacido.apellido_materno,'-',nacido.nombres) as nacido"),
                 DB::raw("CONCAT_WS('',padre.dni,'-',padre.apellido_paterno,'-',padre.apellido_materno,'-',padre.nombres) as padre"),
                 DB::raw("CONCAT_WS('',madre.dni,'-',madre.apellido_paterno,'-',madre.apellido_materno,'-',madre.nombres) as madre"),
-                'acta_nacimientos.*')
+                'acta_nacimientos.*'
+            )
             ->get();
         return Response::json($acta_defunciones);
     }
@@ -51,11 +52,11 @@ class acta_nacimientoController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         //buscar_novio si ya exise persona
-        $personas_not_null=Persona::where("dni", "<>", null)->get();
+        $personas_not_null = Persona::where("dni", "<>", null)->get();
         $buscar_padre = $personas_not_null->where("dni", $request->padre["dni"])->where("dni", "<>", null)->first();
-       
+
         $buscar_madre = $personas_not_null->where("dni", $request->madre["dni"])->where("dni", "<>", null)->first();
 
         $buscar_nacido = $personas_not_null->where("dni", $request->nacido["dni"])->where("dni", "<>", null)->first();
@@ -73,7 +74,7 @@ class acta_nacimientoController extends Controller
         if ($buscar_madre) {
             # si persona ya existe
             $id_madre = $buscar_madre->id;
-        } else {            
+        } else {
             //si persona no existe
             //agregar nueva persona
             $madre = new Persona($request->madre);
@@ -83,8 +84,7 @@ class acta_nacimientoController extends Controller
         if ($buscar_nacido) {
             # si persona ya existe
             $id_nacido = $buscar_nacido->id;
-        }
-        else{
+        } else {
             //si persona no existe
             //agregar nueva persona
             $nacido = new Persona($request->nacido);
@@ -96,7 +96,7 @@ class acta_nacimientoController extends Controller
         $existe_acta = Acta_Nacimiento::where('fk_id_nacido', $id_nacido)->first();
 
         if (($id_padre || $id_madre || $id_nacido) && $existe_acta == null) {
-            
+
             //agregar nueva acta de defuncion
             $nueva_acta = new Acta_Nacimiento();
             $nueva_acta->fk_id_nacido = $id_nacido;
@@ -129,8 +129,8 @@ class acta_nacimientoController extends Controller
     public function show($id)
     {
         //
-        $acta_nacimiento=Acta_Nacimiento::find($id);
-        return Response::json(array("acta"=> $acta_nacimiento,"nacido"=>$acta_nacimiento->nacido,"padre"=> $acta_nacimiento->padre,"madre"=> $acta_nacimiento->madre));
+        $acta_nacimiento = Acta_Nacimiento::find($id);
+        return Response::json(array("acta" => $acta_nacimiento, "nacido" => $acta_nacimiento->nacido, "padre" => $acta_nacimiento->padre, "madre" => $acta_nacimiento->madre));
     }
 
     /**
@@ -154,6 +154,31 @@ class acta_nacimientoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $nacido = Persona::find($request->id_nacido);
+        $nacido->fill($request->nacido)->save();
+
+        $padre = Persona::find($request->id_padre);
+        $padre->fill($request->padre)->save();
+
+        $madre = Persona::find($request->id_madre);
+        $madre->fill($request->madre)->save();
+
+
+        $acta_matrimonio = Acta_Nacimiento::find($id);
+        $acta_matrimonio->fk_id_nacido = $nacido->id;
+        $acta_matrimonio->fk_id_padre = $padre->id;
+        $acta_matrimonio->fk_id_madre = $madre->id;
+        $acta_matrimonio->libro = $request->libro;
+        $acta_matrimonio->acta = $request->acta;
+        $acta_matrimonio->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
+        $acta_matrimonio->fecha_nacimiento = $request->fecha_nacimiento == null ? NULL : Carbon::parse($request->fecha_nacimiento)->format("Y-m-d");
+
+        $acta_matrimonio->rectificado = $request->rectificado;
+        $acta_matrimonio->archivo = $request->archivo;
+
+        $acta_matrimonio->update();
+
+        return $acta_matrimonio;
     }
 
     /**

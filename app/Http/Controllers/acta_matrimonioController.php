@@ -127,6 +127,7 @@ class acta_matrimonioController extends Controller
     public function edit($id)
     {
         //
+        
     }
 
     /**
@@ -139,6 +140,28 @@ class acta_matrimonioController extends Controller
     public function update(Request $request, $id)
     {
         //
+         //
+         $novio = Persona::find($request->id_novio);
+         $novio->fill($request->novio)->save();
+
+         $novia = Persona::find($request->id_novia);
+         $novia->fill($request->novia)->save();
+ 
+ 
+         $acta_matrimonio = Acta_Matrimonio::find($id);
+         $acta_matrimonio->fk_id_novio = $novio->id;
+         $acta_matrimonio->fk_id_novia = $novia->id;
+         $acta_matrimonio->libro = $request->libro;
+         $acta_matrimonio->acta = $request->acta;
+         $acta_matrimonio->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
+         $acta_matrimonio->fecha_matrimonio = $request->fecha_matrimonio == null ? NULL : Carbon::parse($request->fecha_matrimonio)->format("Y-m-d");
+ 
+         $acta_matrimonio->rectificado = $request->rectificado;
+         $acta_matrimonio->archivo = $request->archivo;
+ 
+         $acta_matrimonio->update();
+ 
+         return $acta_matrimonio;
     }
 
     /**
