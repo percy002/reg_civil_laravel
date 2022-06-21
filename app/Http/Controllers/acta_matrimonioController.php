@@ -140,7 +140,6 @@ class acta_matrimonioController extends Controller
     public function update(Request $request, $id)
     {
         //
-         //
          $novio = Persona::find($request->id_novio);
          $novio->fill($request->novio)->save();
 

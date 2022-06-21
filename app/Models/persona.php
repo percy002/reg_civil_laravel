@@ -15,8 +15,7 @@ class Persona extends Model
         'apellido_paterno',
         'apellido_materno',
         'nombres',
-        'genero',
-        'fecha_nacimiento',
+        'sexo',
     ];
     public function getFullname()
     {
