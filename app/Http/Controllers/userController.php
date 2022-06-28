@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Response;
 
 
 class userController extends Controller
@@ -36,6 +38,12 @@ class userController extends Controller
     public function store(Request $request)
     {
         //
+        $user=new User($request->all());
+        $user->password = bcrypt($request->password);
+        if ($user->save()) {
+            return Response::json(array('success' => true), 200);
+        }
+        return $request;
     }
 
     /**

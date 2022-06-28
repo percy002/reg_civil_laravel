@@ -7,6 +7,8 @@ use App\http\Controllers\acta_defuncionController;
 use App\http\Controllers\acta_matrimonioController;
 use App\http\Controllers\personaController;
 use App\http\Controllers\pdfController;
+use App\Http\Controllers\userController;
+use Illuminate\Routing\RouteGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +32,13 @@ Route::resource('acta_defuncion', acta_defuncionController::class);
 Route::resource('acta_matrimonio', acta_matrimonioController::class);
 // Route::resource('usuario', usuarioController::class);
 Route::post('save_pdf',[pdfController::class, 'save']);
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [userController::class, 'save']);
+    Route::post('logout', [userController::class, 'save']);
+    Route::post('me', [userController::class, 'save']);
+
+});
