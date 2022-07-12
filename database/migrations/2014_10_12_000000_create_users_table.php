@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('dni')->unique();
             $table->string('apellido_paterno');
             $table->string('apellido_materno');
+            $table->string('nombres');
             $table->string('password');
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use App\http\Controllers\acta_matrimonioController;
 use App\http\Controllers\personaController;
 use App\http\Controllers\pdfController;
 use App\Http\Controllers\userController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Routing\RouteGroup;
 
 /*
@@ -37,7 +38,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
-    Route::post('login', [userController::class, 'save']);
+    Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [userController::class, 'save']);
     Route::post('me', [userController::class, 'save']);
 
