@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Cors
+class JetMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,6 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
-        // return next($request)
-        // // Establecemos la cabecera CORS para permitir el origen de solicitud desde localhost
-        // ->header('Access-Control-Allow-Origin', '*')
-        // ->header("Access-Control-Allow-Methods",'GET','POST','PUT','DELETE','PATCH','OPTIONS')
-        // ->header("Access-Control-Allow-Headers",'Content-Type','Authorization')
-        // ;
+        return $next($request);
     }
 }
