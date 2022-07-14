@@ -35,11 +35,10 @@ Route::resource('acta_matrimonio', acta_matrimonioController::class);
 Route::post('save_pdf',[pdfController::class, 'save']);
 
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [userController::class, 'save']);
+    Route::post('logout', [userController::class, 'logout']);
     Route::post('me', [userController::class, 'save']);
 
 });
