@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie','/storage/actas/*','api/auth/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie','/storage/*','api/auth/*'],
+    // 'paths' => ['*'],
 
     'allowed_methods' => ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
 
@@ -23,12 +24,12 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['Content-Type','Authorization'],
+    'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

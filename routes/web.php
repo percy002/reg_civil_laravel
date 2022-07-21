@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\http\Controllers\acta_nacimientoController;
+use App\http\Controllers\acta_defuncionController;
+use App\http\Controllers\acta_matrimonioController;
+use App\http\Controllers\personaController;
+use App\http\Controllers\pdfController;
+use App\Http\Controllers\userController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ActasPDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/admin', function () {
+    return view('template.admin_template');
 });
-Route::get('/nada', function () {
-    return "nada";
-});
+Route::resource('acta_defuncion', acta_defuncionController::class);
 
 Route::get('files/my-example-file.pdf', function () {
     return response()->file($path);

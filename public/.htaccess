@@ -5,6 +5,8 @@
 
     RewriteEngine On
 
+    # RewriteRule ^storage/actas/* index.php [L,NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -20,9 +22,22 @@
     RewriteRule ^ index.php [L]
 
     
-    
-</IfModule>
+    # <IfModule mod_headers.c>
+    # Header set Access-Control-Allow-Origin "*"
+    # </IfModule>
     
     <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
+        <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
+            Header set Access-Control-Allow-Origin "*"
+        </FilesMatch>
     </IfModule>
+    </IfModule>
+    # <IfModule mod_headers.c>
+    #     <Location "/storage/*/">
+    #         Header set Access-Control-Allow-Origin "*"
+    #     </Location>
+    # </IfModule>
+    
+    # <IfModule mod_headers.c>
+    # Header set Access-Control-Allow-Origin "*"
+    # </IfModule>
