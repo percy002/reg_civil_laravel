@@ -25,6 +25,8 @@ Route::get('/admin', function () {
     return view('template.admin_template');
 });
 Route::resource('acta_defuncion', acta_defuncionController::class);
+Route::resource('acta_matrimonio', acta_defuncionController::class);
+Route::resource('acta_nacimiento', acta_defuncionController::class);
 
 Route::get('files/my-example-file.pdf', function () {
     return response()->file($path);
