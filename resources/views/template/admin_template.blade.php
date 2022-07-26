@@ -2,7 +2,7 @@
 @section('title','Registro Civil')
     
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">    
+<link rel="stylesheet" href="{{ asset('/css/admin_custom.css') }}">    
 @endsection
 {{-- <h1>Registro civil</h1> --}}
 @section('content')
@@ -19,6 +19,27 @@
 
 <script>
     $('#T_actas_defunciones').DataTable();
+
+    
+</script>
+
+<script>
+    function previewFile() {
+    const preview = document.querySelector('iframe');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+    var filename = file.name;
+
+    reader.addEventListener("load", function () {
+      // convert file to base64 string
+      preview.src = reader.result;
+    }, false);
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+
+  }
 </script>
 
 @endsection

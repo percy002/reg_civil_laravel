@@ -18,6 +18,9 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($acta_defunciones as $item)
+                    
+                @endforeach
                 <tr>
                     <td>Tiger Nixon</td>
                     <td>System Architect</td>

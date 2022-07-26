@@ -1,16 +1,16 @@
 @extends('template.admin_template')
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid ">
     
-    <div class="card">
+    <div class="card h-100">
         <h5 class="card-header">Registro Acta Defuncion</h5>
         <div class="card-body">
-                <div class="card-body">
+                <div>
 
                 <form>
                     <div class="row">
                         <div class="col">
-                            <div class="card p-3">
+                            <div class="card p-3 h-100">
 
                                 <div class="acta">
                                     <h2>Datos de Acta</h2>
@@ -83,9 +83,11 @@
 
                         </div>
                         <div class="col">
-                            <div class="card p-3">
-                                <label for="archivo" class="form-label">Subir Archivo</label>
-                                <input type="file" class="form-control" id="archivo">
+                            <div class="card p-3 h-100">
+                                <label for="archivo" class="form-label my-2" >Subir Archivo</label>
+                                <input type="file" class="form-control" id="archivo" onchange="previewFile()" accept=".pdf">
+
+                                <iframe id="iframe-pdf" style="height: 100%" class="pdf_acta p-2" src="http://jornadasciberseguridad.riasc.unileon.es/archivos/ejemplo_esp.pdf"  frameborder="0"></iframe>
                             </div>
                         </div>
                     </div>
@@ -99,4 +101,5 @@
     
     
 </div>
+    
 @endsection

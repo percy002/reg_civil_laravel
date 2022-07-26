@@ -19,14 +19,15 @@ class acta_matrimonioController extends Controller
     public function index()
     {
         //
-        $acta_defunciones = DB::table('acta_matrimonios')
+        $acta_matrimonios = DB::table('acta_matrimonios')
             ->LeftJoin('personas as novio', 'acta_matrimonios.fk_id_novio', '=', 'novio.id')
             ->leftJoin('personas as novia', 'acta_matrimonios.fk_id_novia', '=', 'novia.id')
             ->select(
                 DB::raw("CONCAT_WS('',novio.dni,'-',novio.apellido_paterno,'-',novio.apellido_materno,'-',novio.nombres) as novio"),
                 DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,'-',novia.apellido_materno,'-',novia.nombres) as novia"), 'acta_matrimonios.*')
                 ->get();
-        return Response::json($acta_defunciones);
+        // return Response::json($acta_defunciones);
+        return view('actas.acta_defuncion.show',compact("acta_matrimonios"));
     }
 
     /**
@@ -37,6 +38,7 @@ class acta_matrimonioController extends Controller
     public function create()
     {
         //
+        return view('actas.acta_matrimonio.create');
     }
 
     /**
@@ -127,7 +129,7 @@ class acta_matrimonioController extends Controller
     public function edit($id)
     {
         //
-        
+        return view('actas.acta_matrimonio.update');        
     }
 
     /**

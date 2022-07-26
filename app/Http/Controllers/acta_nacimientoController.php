@@ -19,7 +19,7 @@ class acta_nacimientoController extends Controller
     public function index()
     {
         //mostrar todas las actas de nacimiento
-        $acta_defunciones = DB::table('acta_nacimientos')
+        $acta_nacimientos = DB::table('acta_nacimientos')
             ->LeftJoin('personas as nacido', 'acta_nacimientos.fk_id_nacido', '=', 'nacido.id')
             ->LeftJoin('personas as padre', 'acta_nacimientos.fk_id_padre', '=', 'padre.id')
             ->LeftJoin('personas as madre', 'acta_nacimientos.fk_id_madre', '=', 'madre.id')
@@ -30,7 +30,8 @@ class acta_nacimientoController extends Controller
                 'acta_nacimientos.*'
             )
             ->get();
-        return Response::json($acta_defunciones);
+        // return Response::json($acta_defunciones);
+        return view('actas.acta_defuncion.show',compact("acta_nacimientos"));
     }
 
     /**
@@ -40,7 +41,8 @@ class acta_nacimientoController extends Controller
      */
     public function create()
     {
-        //mostrar todas las actas de nacimiento
+        //mostrar formulario
+        return view('actas.acta_nacimiento.create');
 
     }
 
@@ -142,6 +144,7 @@ class acta_nacimientoController extends Controller
     public function edit($id)
     {
         //
+        return view('actas.acta_nacimiento.update');
     }
 
     /**

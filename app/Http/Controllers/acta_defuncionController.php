@@ -24,7 +24,7 @@ class acta_defuncionController extends Controller
             ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*')
             ->get();
 
-        return view('actas.acta_defuncion.show');
+        return view('actas.acta_defuncion.show',compact("acta_defunciones"));
         // return Response::json($acta_defunciones);
     }
 
@@ -36,6 +36,7 @@ class acta_defuncionController extends Controller
     public function create()
     {
         //
+        return view('actas.acta_defuncion.create');
     }
 
     /**
@@ -114,7 +115,8 @@ class acta_defuncionController extends Controller
      */
     public function edit($id)
     {
-        //
+        //mostrar formulario update
+        return view('actas.acta_defuncion.update');
     }
 
     /**
