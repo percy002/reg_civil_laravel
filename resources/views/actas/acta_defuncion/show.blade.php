@@ -9,42 +9,29 @@
         <table id="T_actas_defunciones" class="table table-striped" style="width:100%" >
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Nombre Completo</th>
+                    <th>Sexo</th>
+                    <th>Acta</th>
+                    <th>Libro</th>
+                    <th>Fecha de Registro</th>
+                    <th>Fecha de Fallecimiento</th>
+                    <th>Rectificado</th>
+                    <th>Archivo</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($acta_defunciones as $item)
-                    
-                @endforeach
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011-04-25</td>
-                    <td>$320,800</td>
-                </tr>
+                @foreach ($acta_defunciones as $acta_defuncion)
+                    <tr>
+                        <td>{{$acta_defuncion->fallecido}}</td>
+                        <td>{{$acta_defuncion->sexo}}</td>
+                        <td>{{$acta_defuncion->acta}}</td>
+                        <td>{{$acta_defuncion->libro}}</td>
+                        <td>{{$acta_defuncion->fecha_registro}}</td>
+                        <td>{{$acta_defuncion->fecha_defuncion}}</td>
+                        <td>{{$acta_defuncion->rectificado}}</td>
+                        <td>{{$acta_defuncion->archivo}}</td>
+                    </tr>
+                @endforeach              
                 
             </tbody>
     </div>

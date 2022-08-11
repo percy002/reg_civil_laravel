@@ -74,10 +74,18 @@
                                             </select>
                                         </div>
                                         <div class="mb-3 col">
-                                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                                        <label for="fecha_nacimiento" class="form-label">Fecha de Defuncion</label>
+                                        <input type="date" class="form-control" id="fecha_defuncion" name="fecha_defuncion">
                                         </div>
                                     </div>
+
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
                                 </div>
                             </div>
 

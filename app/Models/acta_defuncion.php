@@ -30,5 +30,9 @@ class Acta_Defuncion extends Model
         return $this->belongsTo(Persona::class, 'fk_id_fallecido','id');
     }
 
+    public function fecha_defuncion_format(){
+        return $this->attributes['fecha_registro'];
+    }
+
     
 }
