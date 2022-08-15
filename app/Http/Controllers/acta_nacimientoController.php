@@ -27,11 +27,14 @@ class acta_nacimientoController extends Controller
                 DB::raw("CONCAT_WS('',nacido.dni,'-',nacido.apellido_paterno,'-',nacido.apellido_materno,'-',nacido.nombres) as nacido"),
                 DB::raw("CONCAT_WS('',padre.dni,'-',padre.apellido_paterno,'-',padre.apellido_materno,'-',padre.nombres) as padre"),
                 DB::raw("CONCAT_WS('',madre.dni,'-',madre.apellido_paterno,'-',madre.apellido_materno,'-',madre.nombres) as madre"),
-                'acta_nacimientos.*'
+                'acta_nacimientos.*',
+                'nacido.sexo as sexo',
+                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_registro,'%m/%d/%y')) as fecha_registro_format"),
+                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_nacimiento,'%m/%d/%y')) as fecha_nacimiento_format")
             )
             ->get();
         // return Response::json($acta_defunciones);
-        return view('actas.acta_defuncion.show',compact("acta_nacimientos"));
+        return view('actas.acta_nacimiento.show',compact("acta_nacimientos"));
     }
 
     /**
@@ -57,11 +60,11 @@ class acta_nacimientoController extends Controller
 
         //buscar_novio si ya exise persona
         $personas_not_null = Persona::where("dni", "<>", null)->get();
-        $buscar_padre = $personas_not_null->where("dni", $request->padre["dni"])->where("dni", "<>", null)->first();
+        $buscar_padre = $personas_not_null->where("dni", $request->dni_padre)->where("dni", "<>", null)->first();
 
-        $buscar_madre = $personas_not_null->where("dni", $request->madre["dni"])->where("dni", "<>", null)->first();
+        $buscar_madre = $personas_not_null->where("dni", $request->dni_madre)->where("dni", "<>", null)->first();
 
-        $buscar_nacido = $personas_not_null->where("dni", $request->nacido["dni"])->where("dni", "<>", null)->first();
+        $buscar_nacido = $personas_not_null->where("dni", $request->ndni_acido)->where("dni", "<>", null)->first();
 
         if ($buscar_padre) {
             //si persona ya existe            
@@ -69,7 +72,11 @@ class acta_nacimientoController extends Controller
         } else {
             //si persona no existe
             //agregar nueva persona
-            $padre = new Persona($request->padre);
+            $padre = new Persona();
+            $padre->dni=$request->dni_padre;
+            $padre->nombres=$request->nombres_padre;
+            $padre->apellido_paterno=$request->apellido_paterno_padre;
+            $padre->apellido_materno=$request->apellido_materno_padre;
             $padre->save();
             $id_padre = $padre->id;
         }
@@ -79,7 +86,11 @@ class acta_nacimientoController extends Controller
         } else {
             //si persona no existe
             //agregar nueva persona
-            $madre = new Persona($request->madre);
+            $madre = new Persona();
+            $madre->dni=$request->dni_madre;
+            $madre->nombres=$request->nombres_madre;
+            $madre->apellido_paterno=$request->apellido_paterno_madre;
+            $madre->apellido_materno=$request->apellido_materno_madre;
             $madre->save();
             $id_madre = $madre->id;
         }
@@ -89,7 +100,11 @@ class acta_nacimientoController extends Controller
         } else {
             //si persona no existe
             //agregar nueva persona
-            $nacido = new Persona($request->nacido);
+            $nacido = new Persona();
+            $nacido->dni=$request->dni_nacido;
+            $nacido->nombres=$request->nombres_nacido;
+            $nacido->apellido_paterno=$request->apellido_paterno_nacido;
+            $nacido->apellido_materno=$request->apellido_materno_nacido;
             $nacido->save();
             $id_nacido = $nacido->id;
         }
@@ -113,6 +128,7 @@ class acta_nacimientoController extends Controller
             $nueva_acta->archivo = $request->archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
+                return redirect('/acta_nacimiento');
                 return Response::json(array('success' => true, "mensaje" => "Acta Agregada Correctamente"), 201);
             } else {
                 return Response::json(array('success' => true, "mensaje" => "No se pudo agrega Acta"), 200);

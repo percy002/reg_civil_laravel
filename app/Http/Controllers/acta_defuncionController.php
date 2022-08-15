@@ -21,10 +21,9 @@ class acta_defuncionController extends Controller
         //
         $acta_defunciones = DB::table('acta_defuncions')
             ->LeftJoin('personas', 'acta_defuncions.fk_id_fallecido', '=', 'personas.id')
-            ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*',"DATE_FORMAT(acta_defuncions.fecha_defuncion, '%d-%b-%Y') as formatted_dob")
+            ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*',DB::raw("(DATE_FORMAT(acta_defuncions.fecha_defuncion,'%m/%d/%y')) as fecha_fallecimiento_format"),DB::raw("(DATE_FORMAT(acta_defuncions.fecha_registro,'%m/%d/%y')) as fecha_registro_format"))
             ->get();
 
-            // dd($acta_defunciones);
         return view('actas.acta_defuncion.show',compact("acta_defunciones"));
         // return Response::json($acta_defunciones);
     }
@@ -49,7 +48,7 @@ class acta_defuncionController extends Controller
     public function store(Request $request)
     {
         //buscar si ya exise persona
-        $buscar = Persona::where("dni", $request->persona["dni"])->where("dni", "<>", null)->first();
+        $buscar = Persona::where("dni", $request->dni)->where("dni", "<>", null)->first();
 
         if ($buscar) {
             //si persona ya existe
@@ -58,11 +57,11 @@ class acta_defuncionController extends Controller
             //si persona no existe
             //agregar nueva persona
             $persona = new Persona();
-            $persona->dni = $request->persona["dni"];
-            $persona->nombres = $request->persona["nombres"];
-            $persona->apellido_paterno = $request->persona["apellido_paterno"];
-            $persona->apellido_materno = $request->persona["apellido_materno"];
-            $persona->sexo = $request->persona["sexo"];
+            $persona->dni = $request->dni;
+            $persona->nombres = $request->nombres;
+            $persona->apellido_paterno = $request->apellido_paterno;
+            $persona->apellido_materno = $request->apellido_materno;
+            $persona->sexo = $request->sexo;
 
             // return $persona;
             $persona->save();
@@ -85,6 +84,8 @@ class acta_defuncionController extends Controller
             $nueva_acta->archivo = $request->archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
+                // dd($nueva_acta);
+                return redirect('/acta_defuncion');
                 return Response::json(array('success' => true, "mensaje" => "Acta Agregada Correctamente"), 201);
             } else {
                 return Response::json(array('success' => true, "mensaje" => "No se pudo agrega Acta"), 400);

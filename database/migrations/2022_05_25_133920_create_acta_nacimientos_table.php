@@ -23,7 +23,7 @@ class CreateActaNacimientosTable extends Migration
             $table->date('fecha_registro')->format('d-m-Y');
             $table->date('fecha_nacimiento')->format('d-m-Y');
             $table->string('archivo');
-            $table->boolean('rectificado')->nullable()->default(false);
+            $table->boolean('rectificado')->nullable()->default(0);
             $table->timestamps();
 
         });

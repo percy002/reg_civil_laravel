@@ -26,8 +26,8 @@
                         <td>{{$acta_defuncion->sexo}}</td>
                         <td>{{$acta_defuncion->acta}}</td>
                         <td>{{$acta_defuncion->libro}}</td>
-                        <td>{{$acta_defuncion->fecha_registro}}</td>
-                        <td>{{$acta_defuncion->fecha_defuncion}}</td>
+                        <td>{{$acta_defuncion->fecha_registro_format}}</td>
+                        <td>{{$acta_defuncion->fecha_fallecimiento_format}}</td>
                         <td>{{$acta_defuncion->rectificado}}</td>
                         <td>{{$acta_defuncion->archivo}}</td>
                     </tr>

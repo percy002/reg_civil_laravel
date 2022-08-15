@@ -24,10 +24,10 @@ class acta_matrimonioController extends Controller
             ->leftJoin('personas as novia', 'acta_matrimonios.fk_id_novia', '=', 'novia.id')
             ->select(
                 DB::raw("CONCAT_WS('',novio.dni,'-',novio.apellido_paterno,'-',novio.apellido_materno,'-',novio.nombres) as novio"),
-                DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,'-',novia.apellido_materno,'-',novia.nombres) as novia"), 'acta_matrimonios.*')
+                DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,'-',novia.apellido_materno,'-',novia.nombres) as novia"), 'acta_matrimonios.*',DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_registro,'%m/%d/%y')) as fecha_registro_format"),DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_matrimonio,'%m/%d/%y')) as fecha_matrimonio_format"))
                 ->get();
         // return Response::json($acta_defunciones);
-        return view('actas.acta_defuncion.show',compact("acta_matrimonios"));
+        return view('actas.acta_matrimonio.show',compact("acta_matrimonios"));
     }
 
     /**
@@ -55,9 +55,9 @@ class acta_matrimonioController extends Controller
         // $novia->save();
         // return $novia;
         //buscar_novio si ya exise persona
-        $buscar_novio = Persona::where("dni", $request->novio["dni"])->where("dni", "<>", null)->first();
+        $buscar_novio = Persona::where("dni", $request->dni_novio)->where("dni", "<>", null)->first();
 
-        $buscar_novia = Persona::where("dni", $request->novia["dni"])->where("dni", "<>", null)->first();
+        $buscar_novia = Persona::where("dni", $request->dni_novia)->where("dni", "<>", null)->first();
 
         if ($buscar_novio) {
             //si persona ya existe            
@@ -65,7 +65,11 @@ class acta_matrimonioController extends Controller
         } else {
             //si persona no existe
             //agregar nueva persona
-            $novio = new Persona($request->novio);
+            $novio = new Persona();
+            $novio->dni=$request->dni_novio;
+            $novio->nombres=$request->nombres_novio;
+            $novio->apellido_paterno=$request->apellido_paterno_novio;
+            $novio->apellido_materno=$request->apellido_materno_novio;
             $novio->save();
             $id_novio = $novio->id;
         }
@@ -75,7 +79,11 @@ class acta_matrimonioController extends Controller
         } else {
             //si persona no existe
             //agregar nueva persona
-            $novia = new Persona($request->novia);
+            $novia = new Persona();
+            $novia->dni=$request->dni_novia;
+            $novia->nombres=$request->nombres_novia;
+            $novia->apellido_paterno=$request->apellido_paterno_novia;
+            $novia->apellido_materno=$request->apellido_materno_novia;
             $novia->save();
             $id_novia = $novia->id;
         }
@@ -97,6 +105,7 @@ class acta_matrimonioController extends Controller
             $nueva_acta->archivo = $request->archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
+                return redirect('/acta_matrimonio');
                 return Response::json(array('success' => true, "mensaje" => "Acta Agregada Correctamente"), 201);
             } else {
                 return Response::json(array('success' => true, "mensaje" => "No se pudo agrega Acta"), 200);
@@ -117,6 +126,7 @@ class acta_matrimonioController extends Controller
     {
         //
         $acta_matrimonio=Acta_Matrimonio::find($id);
+        
         return Response::json(array("acta"=> $acta_matrimonio,"novio"=>$acta_matrimonio->novio,"novia"=> $acta_matrimonio->novia));
     }
 
