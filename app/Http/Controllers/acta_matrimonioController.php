@@ -49,11 +49,21 @@ class acta_matrimonioController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-        // $novia=new Persona($request->novia);
-        // // $novia=$request->novia;
-        // $novia->save();
-        // return $novia;
+        
+        //agregar el archivo
+        $file = "";
+        if ($request->hasFile('archivo')) {
+            //nombre del archivo
+            $archivo = $request->file('archivo');
+            $nombre_archivo="Acta_matri-".$request->dni_novio."-".
+            $request->dni_novia."-".
+            $request->fecha_registro.
+            ".".$archivo->guessExtension();
+
+            $url_path="public/actas/Actas_Matrimonios";
+            $file = $request->file("archivo")->storeAs($url_path,$nombre_archivo);
+            // dd($file);
+        }
         //buscar_novio si ya exise persona
         $buscar_novio = Persona::where("dni", $request->dni_novio)->where("dni", "<>", null)->first();
 
@@ -139,7 +149,10 @@ class acta_matrimonioController extends Controller
     public function edit($id)
     {
         //
-        return view('actas.acta_matrimonio.update');        
+        //mostrar formulario update
+        $acta_matrimonio = Acta_Matrimonio::findOrFail($id);
+
+        return view('actas.acta_matrimonio.update',compact('acta_matrimonio'));      
     }
 
     /**
@@ -172,7 +185,8 @@ class acta_matrimonioController extends Controller
  
          $acta_matrimonio->update();
  
-         return $acta_matrimonio;
+        //  return $acta_matrimonio;
+        return redirect('/acta_matrimonio');
     }
 
     /**

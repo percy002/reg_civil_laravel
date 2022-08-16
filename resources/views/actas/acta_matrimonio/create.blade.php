@@ -7,7 +7,7 @@
         <div class="card-body">
                 <div>
 
-                <form action="{{ route('acta_matrimonio.store') }}" method="POST">
+                <form action="{{ route('acta_matrimonio.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col">

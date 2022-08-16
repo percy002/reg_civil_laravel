@@ -105,6 +105,7 @@ class acta_nacimientoController extends Controller
             $nacido->nombres=$request->nombres_nacido;
             $nacido->apellido_paterno=$request->apellido_paterno_nacido;
             $nacido->apellido_materno=$request->apellido_materno_nacido;
+            $nacido->sexo=$request->sexo;
             $nacido->save();
             $id_nacido = $nacido->id;
         }
@@ -160,7 +161,10 @@ class acta_nacimientoController extends Controller
     public function edit($id)
     {
         //
-        return view('actas.acta_nacimiento.update');
+        //mostrar formulario update
+        $acta_nacimiento = Acta_Nacimiento::findOrFail($id);
+
+        return view('actas.acta_nacimiento.update',compact('acta_nacimiento'));
     }
 
     /**
@@ -197,7 +201,8 @@ class acta_nacimientoController extends Controller
 
         $acta_matrimonio->update();
 
-        return $acta_matrimonio;
+        // return $acta_matrimonio;
+        return redirect('/acta_nacimiento');
     }
 
     /**

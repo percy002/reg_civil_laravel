@@ -6,7 +6,7 @@
         <h5 class="card-header">Registro Acta Defuncion</h5>
         <div class="card-body">
                 <div>
-                <form action="{{ route('acta_defuncion.store') }}" method="POST">
+                <form action="{{ route('acta_defuncion.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col">
@@ -32,7 +32,7 @@
                                         <input type="date" class="form-control" id="fecha_registro" name="fecha_registro">
                                         </div>
                                         <div class="form-check col text-center mt-5">
-                                            <input type="checkbox" class="form-check-input" id="rectificado" name="rectificado" value="1">
+                                            <input type="checkbox" class="form-check-input" id="rectificado" name="rectificado" value="1" >
                                             <label class="form-check-label" for="exampleCheck1">Rectificado</label>
                                         </div>
                                     </div>
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres">
+                                        <input type="text" class="form-control" id="nombres" name="nombres">
                                         </div>
                                     </div>
                                     <div class="row">
