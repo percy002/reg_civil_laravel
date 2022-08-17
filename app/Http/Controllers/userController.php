@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+
+use Livewire\Component;
+use Livewire\WithPagination;
+
 use Response;
 
 
@@ -17,6 +21,9 @@ class userController extends Controller
     public function index()
     {
         //
+        
+        $usuarios = User::all();
+        return view('usuarios.show', compact('usuarios'));
     }
 
     /**
@@ -27,6 +34,7 @@ class userController extends Controller
     public function create()
     {
         //
+        return view('usuarios.create');
     }
 
     /**
@@ -40,10 +48,12 @@ class userController extends Controller
         //
         $user=new User($request->all());
         $user->password = bcrypt($request->password);
+        $user->assignRole("$request->rol");
         if ($user->save()) {
-            return Response::json(array('success' => true), 200);
+
+            // return Response::json(array('success' => true), 200);
         }
-        return $request;
+        return redirect('/usuarios');
     }
 
     /**
@@ -55,6 +65,7 @@ class userController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -66,6 +77,7 @@ class userController extends Controller
     public function edit($id)
     {
         //
+        return view('usuarios.update');
     }
 
     /**

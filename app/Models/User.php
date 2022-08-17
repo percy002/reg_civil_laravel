@@ -9,20 +9,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    protected $primaryKey ="dni";
     protected $fillable = [
         'dni',
         'apellido_paterno',
         'apellido_materno',
+        'nombres',
+        'estado',
         'password',
     ];
 
@@ -64,4 +68,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function nombre_completo(){
+        return $this->attributes['nombres'].'-'.$this->attributes['apellido_paterno'].'-'.$this->attributes['apellido_materno'];
+    }
+
+    public function rol(){
+        return count($this->getRoleNames())>0 ? $this->getRoleNames()[0]:null;
+    }
+    
+    
 }

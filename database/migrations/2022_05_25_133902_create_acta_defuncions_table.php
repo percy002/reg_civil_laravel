@@ -18,10 +18,10 @@ class CreateActaDefuncionsTable extends Migration
             $table->foreignId('fk_id_fallecido')->constrained('personas')->unique();
             $table->string('acta');
             $table->string('libro');
-            $table->date('fecha_registro')->format('d/m/Y');
-            $table->date('fecha_defuncion')->format('d/m/Y')->nullable();
+            $table->date('fecha_registro')->format('d-m-Y');
+            $table->date('fecha_defuncion')->format('d-m-Y')->nullable();
             $table->string('archivo');
-            $table->boolean('rectificado')->nullable()->default(0);
+            $table->boolean('rectificado')->default(0);
             $table->timestamps();
 
             

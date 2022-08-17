@@ -10,6 +10,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActasPDFController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,14 +22,20 @@ use App\Http\Controllers\ActasPDFController;
 |
 */
 
-Route::get('/admin', function () {
+
+Route::get('/', function () {
     return view('template.admin_template');
 });
 Route::resource('acta_defuncion', acta_defuncionController::class);
 Route::resource('acta_matrimonio', acta_matrimonioController::class);
 Route::resource('acta_nacimiento', acta_nacimientoController::class);
+Route::resource('usuarios', userController::class);
 
 Route::get('files/my-example-file.pdf', function () {
     return response()->file($path);
 });
 // Route::resource('acta_nacimiento', acta_nacimientoController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

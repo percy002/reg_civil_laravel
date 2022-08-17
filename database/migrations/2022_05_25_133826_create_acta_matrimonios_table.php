@@ -22,7 +22,7 @@ class CreateActaMatrimoniosTable extends Migration
             $table->date('fecha_registro')->format('d-m-Y');
             $table->date('fecha_matrimonio')->format('d-m-Y');
             $table->string('archivo');
-            $table->boolean('rectificado')->nullable()->default(0);
+            $table->boolean('rectificado')->default(0);
             $table->timestamps();
         });
     }
