@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Tymon\JWTAuth\Contracts\JWTSubject;
+// use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -20,7 +20,6 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
-    protected $primaryKey ="dni";
     protected $fillable = [
         'dni',
         'apellido_paterno',
@@ -29,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'estado',
         'password',
     ];
+    Protected $guard_name ='web';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -73,9 +73,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->attributes['nombres'].'-'.$this->attributes['apellido_paterno'].'-'.$this->attributes['apellido_materno'];
     }
 
-    public function rol(){
-        return count($this->getRoleNames())>0 ? $this->getRoleNames()[0]:null;
-    }
+    
+    // public function getRoleNames()
+    // {
+    //     return $this->belongsToMany(Role::class);
+
+    // }
     
     
 }

@@ -10,6 +10,8 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActasPDFController;
 
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,19 +25,37 @@ use App\Http\Controllers\ActasPDFController;
 */
 
 
-Route::get('/', function () {
-    return view('template.admin_template');
-});
-Route::resource('acta_defuncion', acta_defuncionController::class);
-Route::resource('acta_matrimonio', acta_matrimonioController::class);
-Route::resource('acta_nacimiento', acta_nacimientoController::class);
-Route::resource('usuarios', userController::class);
+// Route::get('/', function () {
+//     return view('template.admin_template')->middleware('auth');;
+// });
 
-Route::get('files/my-example-file.pdf', function () {
-    return response()->file($path);
+Route::middleware(['auth'])->group(function () {
+    
 });
+Route::resource('acta_defuncion', acta_defuncionController::class)->middleware('auth');
+Route::resource('acta_matrimonio', acta_matrimonioController::class)->middleware('auth');
+Route::resource('acta_nacimiento', acta_nacimientoController::class)->middleware('auth');
+Route::resource('usuarios', userController::class)->middleware('auth');
+
+
 // Route::resource('acta_nacimiento', acta_nacimientoController::class);
 
-Auth::routes();
+// Auth::routes();
+// Route::get('login', );
+// Route::post('login', );
+Route::get('login', function () {
+    return view("auth.login");
+})->name('login');
+Route::post('login', function () {
+    $credentials = request()->only('dni','password');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    if(Auth::attempt($credentials)){
+        request()->session()->regenerate();
+        // dd(Auth::attempt($credentials));
+        return redirect()->intended('acta_nacimiento');
+    }
+    else
+    return "error";
+});
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

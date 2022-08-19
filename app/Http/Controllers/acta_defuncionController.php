@@ -138,6 +138,8 @@ class acta_defuncionController extends Controller
         //mostrar formulario update
         $acta_defuncion = Acta_Defuncion::findOrFail($id);
 
+        dd($acta_defuncion);
+
         return view('actas.acta_defuncion.update',compact('acta_defuncion'));
     }
 

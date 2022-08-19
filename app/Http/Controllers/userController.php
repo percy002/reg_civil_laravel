@@ -48,11 +48,14 @@ class userController extends Controller
         //
         $user=new User($request->all());
         $user->password = bcrypt($request->password);
-        $user->assignRole("$request->rol");
+        // dd($request->rol);
+        $user->assignRole($request->rol);
         if ($user->save()) {
 
             // return Response::json(array('success' => true), 200);
         }
+
+        dd($user->getRoleNames());
         return redirect('/usuarios');
     }
 
@@ -77,7 +80,12 @@ class userController extends Controller
     public function edit($id)
     {
         //
-        return view('usuarios.update');
+        // dd($id);
+        $usuario = User::find($id);
+
+        // dd($user);
+        // dd($user->hasRole("usuario"));
+        return view('usuarios.update',compact('usuario'));
     }
 
     /**

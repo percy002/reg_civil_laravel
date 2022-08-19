@@ -31,7 +31,7 @@
                         <td>{{$usuario->nombres}} - {{$usuario->apellido_paterno}} - {{$usuario->apellido_materno}}</td>
                         <td>{{$usuario->dni}}</td>
                         <td>{{$usuario->estado}}</td>
-                        <td>{{$usuario->rol();}}</td>
+                        <td>{{$usuario->getRoleNames()[0];}}</td>
                         <td>
                             <a href="{{ route('usuarios.edit', $usuario->id)}}" type="button" class="btn btn-warning">Editar</a>
                             

@@ -12,10 +12,10 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="usuario" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                            <label for="dni" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="usuario" type="text" class="form-control" name="usuario" value="{{ old('email') }}" required autofocus>
+                                <input id="dni" type="text" class="form-control" name="dni" value="{{ old('email') }}" required autofocus>
 
                                 {{-- @error('email')
                                     <span class="invalid-feedback" role="alert">
