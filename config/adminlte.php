@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>Registro Civil</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/logo-muni-sansebas.png',
+    'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'logo munipalidad de san sebastian',
 
     /*
     |--------------------------------------------------------------------------
@@ -188,9 +188,9 @@ return [
     */
 
     'use_route_url' => false,
-    // 'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     // 'logout_url' => 'logout',
-    'login_url' => 'login',
+    'login_url' => '/',
     // 'register_url' => 'register',
     // 'password_reset_url' => 'password/reset',
     // 'password_email_url' => 'password/email',
@@ -226,15 +226,17 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
+        // [
+        //     'type'         => 'navbar-search',
+        //     'text'         => 'search',
+        //     'topnav_right' => true,
+        // ],
+        // [
+        //     'type'         => 'fullscreen-widget',
+        //     'topnav_right' => true,
+        // ],
+
+
 
         // Sidebar items:
         
@@ -262,11 +264,15 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         
+        
         ['header' => 'Menu'],
         [
             'text' => 'Usuarios',
             'url'  => 'usuarios',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'administrador',
+            'role' => 'administrador',
+            
         ],
         
     ],

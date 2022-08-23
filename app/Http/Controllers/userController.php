@@ -18,6 +18,12 @@ class userController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('can:administrador');
+ 
+    }
     public function index()
     {
         //
@@ -55,7 +61,7 @@ class userController extends Controller
             // return Response::json(array('success' => true), 200);
         }
 
-        dd($user->getRoleNames());
+        // dd($user->getRoleNames());
         return redirect('/usuarios');
     }
 

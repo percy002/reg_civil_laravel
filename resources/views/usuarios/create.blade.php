@@ -39,12 +39,16 @@
                                     <div class="row">
 
                                         <div class="mb-3 col">
-                                            <label for="sexo" class="form-label d-block">Rol</label>
+                                            <label for="rol" class="form-label d-block">Rol</label>
                                             <select class="form-select" name="rol" id="rol">
                                                 <option value="usuario" selected>usuario</option>
                                                 <option value="administrador">Administrador</option>
                                             </select>
                                         </div>
+                                        <div class="mb-3 col">
+                                            <label for="password" class="form-label">Contraseña</label>
+                                            <input type="password" class="form-control" id="password" name="password">
+                                            </div>
                                     </div>
         
                                     

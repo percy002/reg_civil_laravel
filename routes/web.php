@@ -43,10 +43,10 @@ Route::resource('usuarios', userController::class)->middleware('auth');
 // Auth::routes();
 // Route::get('login', );
 // Route::post('login', );
-Route::get('login', function () {
+Route::get('/', function () {
     return view("auth.login");
 })->name('login');
-Route::post('login', function () {
+Route::post('/', function () {
     $credentials = request()->only('dni','password');
 
     if(Auth::attempt($credentials)){
@@ -55,7 +55,7 @@ Route::post('login', function () {
         return redirect()->intended('acta_nacimiento');
     }
     else
-    return "error";
+    return redirect("/");
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

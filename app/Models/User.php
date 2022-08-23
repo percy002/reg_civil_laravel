@@ -73,6 +73,15 @@ class User extends Authenticatable
         return $this->attributes['nombres'].'-'.$this->attributes['apellido_paterno'].'-'.$this->attributes['apellido_materno'];
     }
 
+    public function name(){
+        // return $this->attributes['nombres'];
+        return "nombres";
+    }
+
+    public function desc(){
+        return "administrador";
+    }
+
     
     // public function getRoleNames()
     // {
