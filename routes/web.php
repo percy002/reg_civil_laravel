@@ -45,8 +45,9 @@ Route::resource('usuarios', userController::class)->middleware('auth');
 // Route::post('login', );
 Route::get('/', function () {
     return view("auth.login");
-})->name('login');
-Route::post('/', function () {
+})->name("inicio");
+
+Route::post('/login', function () {
     $credentials = request()->only('dni','password');
 
     if(Auth::attempt($credentials)){
@@ -56,6 +57,16 @@ Route::post('/', function () {
     }
     else
     return redirect("/");
+})->name('login');
+
+Route::post('/logout', function () {
+    Auth::logout();
+ 
+    request()->session()->invalidate();
+ 
+    request()->session()->regenerateToken();
+ 
+    return redirect('/');
 });
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

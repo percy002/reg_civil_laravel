@@ -20,6 +20,7 @@ class userController extends Controller
      */
     public function __construct()
     {
+        dd(User::all());
         $this->middleware('auth');
         // $this->middleware('can:administrador');
  
