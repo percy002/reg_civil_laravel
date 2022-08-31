@@ -270,7 +270,7 @@ return [
             'text' => 'Usuarios',
             'url'  => 'usuarios',
             'icon' => 'fas fa-fw fa-user',
-            'can' => 'usuario all',
+            'can' => 'editor',
             
         ],
         

@@ -19,18 +19,18 @@
                                     <div class="row">
                                         <div class="mb-3 col">
                                         <label for="acta" class="form-label">Acta</label>
-                                        <input type="text" class="form-control" id="acta" name="acta">
+                                        <input type="text" class="form-control" id="acta" name="acta" required>
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="libro" class="form-label">libro</label>
-                                        <input type="text" class="form-control" id="libro" name="libro">
+                                        <input type="text" class="form-control" id="libro" name="libro" required>
                                         </div>
                                     </div>
                                     <div class="row">
         
                                         <div class="mb-3 col">
                                         <label for="fecha_registro" class="form-label">fecha_registro</label>
-                                        <input type="date" class="form-control" id="fecha_registro" name="fecha_registro">
+                                        <input type="date" class="form-control" id="fecha_registro" name="fecha_registro" required>
                                         </div>
                                         <div class="form-check col text-center mt-5">
                                             <input type="checkbox" class="form-check-input" id="rectificado" name="rectificado" value="1">
@@ -97,7 +97,7 @@
         
                                     <div class="mb-3 col">
                                     <label for="fecha_registro" class="form-label">Fecha de Matrimonio</label>
-                                    <input type="date" class="form-control" id="fecha_matrimonio" name="fecha_matrimonio">
+                                    <input type="date" class="form-control" id="fecha_matrimonio" name="fecha_matrimonio" required>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                         <div class="col">
                             <div class="card p-3 h-100">
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
-                                <input type="file" class="form-control" id="archivo" name="archivo" onchange="previewFile()" accept=".pdf">
+                                <input type="file" class="form-control" id="archivo" name="archivo" onchange="previewFile()" accept=".pdf" required>
 
                                 <iframe id="iframe-pdf" style="height: 100%" class="pdf_acta p-2" src="http://jornadasciberseguridad.riasc.unileon.es/archivos/ejemplo_esp.pdf"  frameborder="0"></iframe>
                             </div>

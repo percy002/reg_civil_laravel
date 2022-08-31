@@ -29,23 +29,22 @@ use Illuminate\Support\Facades\Auth;
 //     return view('template.admin_template')->middleware('auth');;
 // });
 
-Route::middleware(['auth'])->group(function () {
-    
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', function () {
+        return view("auth.login");
+    })->name("inicio");
+});
+Route::group(['middleware' => ['can:administrador']], function () {
+    //
+    Route::resource('usuarios', userController::class)->middleware('auth');
 });
 Route::resource('acta_defuncion', acta_defuncionController::class)->middleware('auth');
 Route::resource('acta_matrimonio', acta_matrimonioController::class)->middleware('auth');
 Route::resource('acta_nacimiento', acta_nacimientoController::class)->middleware('auth');
-Route::resource('usuarios', userController::class)->middleware('auth');
 
 
-// Route::resource('acta_nacimiento', acta_nacimientoController::class);
 
-// Auth::routes();
-// Route::get('login', );
-// Route::post('login', );
-Route::get('/', function () {
-    return view("auth.login");
-})->name("inicio");
+
 
 Route::post('/login', function () {
     $credentials = request()->only('dni','password');

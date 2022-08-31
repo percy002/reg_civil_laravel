@@ -16,6 +16,10 @@ class acta_nacimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware(['permission:editor|administrador'])->except('index');
+    }
     public function index()
     {
         //mostrar todas las actas de nacimiento
@@ -57,7 +61,21 @@ class acta_nacimientoController extends Controller
      */
     public function store(Request $request)
     {
+        //agregar el archivo
+        $file = "";
+        $nombre_archivo="";
+        if ($request->hasFile('archivo')) {
+            //nombre del archivo
+            $archivo = $request->file('archivo');
+            $nombre_archivo="Acta_matri-".$request->dni_padre."-".
+            $request->dni_madre."-".
+            \strtotime(Carbon::now()).
+            ".".$archivo->guessExtension();
 
+            $url_path="public/actas/Actas_Nacimientos";
+            $file = $request->file("archivo")->storeAs($url_path,$nombre_archivo);
+            // dd($file);
+        }
         //buscar_novio si ya exise persona
         $personas_not_null = Persona::where("dni", "<>", null)->get();
         $buscar_padre = $personas_not_null->where("dni", $request->dni_padre)->where("dni", "<>", null)->first();
@@ -125,8 +143,8 @@ class acta_nacimientoController extends Controller
             $nueva_acta->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
             $nueva_acta->fecha_nacimiento = $request->fecha_nacimiento == null ? NULL : Carbon::parse($request->fecha_nacimiento)->format("Y-m-d");
 
-            $nueva_acta->rectificado = $request->rectificado;
-            $nueva_acta->archivo = $request->archivo;
+            $nueva_acta->rectificado = $request->rectificado == 1? 1:0;
+            $nueva_acta->archivo = 'storage/actas/Actas_Nacimientos/'.$nombre_archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
                 return redirect('/acta_nacimiento');

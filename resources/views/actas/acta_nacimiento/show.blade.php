@@ -9,10 +9,12 @@
     <div class="card p-3">
         <div class="row mb-3">
 
+            @can('editor')
             <div class="col-3">
 
                 <a href="{{ route('acta_nacimiento.create')}}" type="button" class="btn btn-success">Agregar Acta de Nacimiento</a>
             </div>
+            @endcan
         </div>
         <table id="T_actas_defunciones" class="table table-striped" style="width:100%" >
             <thead>
@@ -27,7 +29,9 @@
                     <th>Fecha de Nacimiento</th>
                     <th>Rectificado</th>
                     <th>Archivo</th>
+                    @can('editor')
                     <th>Opciones</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -45,10 +49,12 @@
                         <td>{{$acta_nacimiento->archivo}}
                             <button type="button" class="btn btn-primary">Ver pdf</button>
                         </td>
+                        @can('editor')
                         <td>
                             <a href="{{ route('acta_nacimiento.edit', $acta_nacimiento->id)}}" type="button" class="btn btn-warning">Editar</a>
                             
                         </td>
+                        @endcan
                     </tr>
                 @endforeach              
                 

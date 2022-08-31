@@ -9,10 +9,13 @@
     <div class="card p-3">
         <div class="row mb-3">
 
+            @can('editor')
+                
             <div class="col-3">
 
                 <a href="{{ route('usuarios.create')}}" type="button" class="btn btn-success">Agregar Nuevo Usuario</a>
             </div>
+            @endcan
         </div>
         <table id="T_actas_defunciones" class="table table-striped" style="width:100%" >
             <thead>
@@ -21,7 +24,10 @@
                     <th>Dni</th>
                     <th>estado</th>
                     <th>Rol</th>
+                    <th>permisos</th>
+                    @can('editor')
                     <th>Opciones</th>
+                    @endcan
                     
                 </tr>
             </thead>
@@ -32,10 +38,15 @@
                         <td>{{$usuario->dni}}</td>
                         <td>{{$usuario->estado}}</td>
                         <td>{{$usuario->getRoleNames()[0];}}</td>
+                        <td>{{$usuario->getPermissionNames();}}</td>
+
+                        @can('editor')
+                            
                         <td>
                             <a href="{{ route('usuarios.edit', $usuario->id)}}" type="button" class="btn btn-warning">Editar</a>
                             
                         </td>
+                        @endcan
                     </tr>
                 @endforeach              
                 

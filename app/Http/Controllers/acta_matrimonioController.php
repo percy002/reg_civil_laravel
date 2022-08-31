@@ -16,6 +16,10 @@ class acta_matrimonioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware(['permission:editor|administrador'])->except('index');
+    }
     public function index()
     {
         //
@@ -52,12 +56,13 @@ class acta_matrimonioController extends Controller
         
         //agregar el archivo
         $file = "";
+        $nombre_archivo="";
         if ($request->hasFile('archivo')) {
             //nombre del archivo
             $archivo = $request->file('archivo');
             $nombre_archivo="Acta_matri-".$request->dni_novio."-".
             $request->dni_novia."-".
-            $request->fecha_registro.
+            \strtotime(Carbon::now()).
             ".".$archivo->guessExtension();
 
             $url_path="public/actas/Actas_Matrimonios";
@@ -111,8 +116,8 @@ class acta_matrimonioController extends Controller
             $nueva_acta->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
             $nueva_acta->fecha_matrimonio = $request->fecha_matrimonio == null ? NULL : Carbon::parse($request->fecha_matrimonio)->format("Y-m-d");
 
-            $nueva_acta->rectificado = $request->rectificado;
-            $nueva_acta->archivo = $request->archivo;
+            $nueva_acta->rectificado = $request->rectificado == 1? 1:0;
+            $nueva_acta->archivo = 'storage/actas/Actas_Matrimonios/'.$nombre_archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
                 return redirect('/acta_matrimonio');

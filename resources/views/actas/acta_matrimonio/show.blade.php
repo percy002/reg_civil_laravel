@@ -8,11 +8,12 @@
     <h3 class="h3">Actas de Matrimonios</h3>
     <div class="card p-3">
         <div class="row mb-3">
-
+            @can('editor')
             <div class="col-3">
 
                 <a href="{{ route('acta_matrimonio.create')}}" type="button" class="btn btn-success">Agregar Acta de Matrimonio</a>
             </div>
+            @endcan
         </div>
         <table id="T_actas_defunciones" class="table table-striped" style="width:100%" >
             <thead>
@@ -25,7 +26,9 @@
                     <th>Fecha de matrimonio</th>
                     <th>Rectificado</th>
                     <th>Archivo</th>
+                    @can('editor')
                     <th>Opciones</th>
+                    @endcan
                     
                 </tr>
             </thead>
@@ -40,11 +43,34 @@
                         <td>{{$acta_matrimonio->fecha_matrimonio_format}}</td>
                         <td>{{$acta_matrimonio->rectificado}}</td>
                         <td>{{$acta_matrimonio->archivo}}
-                            <button type="button" class="btn btn-primary">Ver pdf</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#acta{{$acta_matrimonio->id}}">
+                                Ver pdf
+                              </button>
+                              
+                              <!-- Modal -->
+                              <div class="modal fade" id="acta{{$acta_matrimonio->id}}" tabindex="-1" role="dialog" aria-labelledby="ver_actaTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      {{-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> --}}
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe id="iframe-pdf" width="100%" style="height: 600px" class="pdf_acta p-2" src="{{asset($acta_matrimonio->archivo) }}"  frameborder="0"></iframe>
+
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
                         </td>
+                        @can('editor')
                         <td>
                             <a href="{{ route('acta_matrimonio.edit', $acta_matrimonio->id)}}" type="button" class="btn btn-warning">Editar</a>
                         </td>
+                        @endcan
                     </tr>
                 @endforeach              
                 

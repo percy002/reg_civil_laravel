@@ -17,6 +17,10 @@ class acta_defuncionController extends Controller
      * @return \Illuminate\Http\Response
      */
     // private $file="";
+    public function __construct()
+    {
+        $this->middleware(['permission:editor|administrador'])->except('index');
+    }
     public function index()
     {
         //
@@ -58,7 +62,7 @@ class acta_defuncionController extends Controller
             $request->apellido_paterno."-".
             $request->apellido_materno."-".
             $request->nombres."-".
-            $request->fecha_registro.
+            \strtotime(Carbon::now()).
             ".".$archivo->guessExtension();
 
             $url_path="public/actas/Actas_Defunciones";
@@ -98,7 +102,7 @@ class acta_defuncionController extends Controller
             $nueva_acta->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
             $nueva_acta->fecha_defuncion = $request->fecha_defuncion == null ? NULL : Carbon::parse($request->fecha_defuncion)->format("Y-m-d");
 
-            $nueva_acta->rectificado = $request->rectificado;
+            $nueva_acta->rectificado = $request->rectificado == 1? 1:0;
             $nueva_acta->archivo = 'storage/actas/Actas_Defunciones/'.$nombre_archivo;
             if ($nueva_acta->save()) {
                 // return $nueva_acta;
