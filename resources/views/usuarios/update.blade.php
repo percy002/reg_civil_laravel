@@ -8,6 +8,7 @@
                 <div>
                 <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
                     @csrf
+                    @method('patch')
                     <div class="row">
                         <div class="col">
                             <div class="card p-3 h-100">
@@ -45,6 +46,10 @@
                                                 <option value="administrador" {{ $usuario->getRoleNames()[0] == 'administrador' ? 'selected' : null }}>Administrador</option>
                                             </select>
                                         </div>
+                                        <div class="mb-3 col">
+                                            <label for="password" class="form-label">Contraseña</label>
+                                            <input type="password" class="form-control" id="password" name="password">
+                                            </div>
                                     </div>
         
                                     

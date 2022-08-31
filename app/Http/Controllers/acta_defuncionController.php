@@ -142,7 +142,7 @@ class acta_defuncionController extends Controller
         //mostrar formulario update
         $acta_defuncion = Acta_Defuncion::findOrFail($id);
 
-        dd($acta_defuncion);
+        // dd($acta_defuncion);
 
         return view('actas.acta_defuncion.update',compact('acta_defuncion'));
     }
@@ -156,9 +156,28 @@ class acta_defuncionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $persona = Persona::find($id);
-        // $persona = $request->persona;
+        
+        //agregar el archivo
+        $file = "";
+        $nombre_archivo=$request->old_archivo;
+        if ($request->hasFile('archivo')) {
+            //nombre del archivo
+            $archivo = $request->file('archivo');
+            // dd($archivo);
+            $nombre_archivo="Acta_nac-".$request->dni."-".
+            $request->apellido_paterno."-".
+            $request->apellido_materno."-".
+            $request->nombres."-".
+            \strtotime(Carbon::now()).
+            ".".$archivo->guessExtension();
+
+            $url_path="public/actas/Actas_Defunciones";
+            $file = $request->file("archivo")->storeAs($url_path,$nombre_archivo);
+            // dd($file);
+            $nombre_archivo='storage/actas/Actas_Defunciones/'.$nombre_archivo;
+        }
+        //modificar fallecido
+        $persona = Persona::where('dni',$request->dni)->first();
         $persona->nombres = $request->nombres;
         $persona->apellido_paterno = $request->apellido_paterno;
         $persona->apellido_materno = $request->apellido_materno;
@@ -173,8 +192,8 @@ class acta_defuncionController extends Controller
         $acta_defuncion->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
         $acta_defuncion->fecha_defuncion = $request->fecha_defuncion == null ? NULL : Carbon::parse($request->fecha_defuncion)->format("Y-m-d");
 
-        $acta_defuncion->rectificado = $request->rectificado;
-        $acta_defuncion->archivo = $request->archivo;
+        $acta_defuncion->rectificado = $request->rectificado == 1? 1:0;
+        $acta_defuncion->archivo = $nombre_archivo;
 
         $acta_defuncion->update();
 

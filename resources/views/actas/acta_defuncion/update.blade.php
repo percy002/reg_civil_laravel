@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres" value="{{$acta_defuncion->persona->nombres}}">
+                                        <input type="text" class="form-control" id="nombres" name="nombres" value="{{$acta_defuncion->persona->nombres}}">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -87,12 +87,14 @@
                                     <br>
                                     <br>
                                     <br>
+                                    <br>
                                 </div>
                             </div>
 
                         </div>
                         <div class="col">
                             <div class="card p-3 h-100">
+                                <input type="text " hidden value="{{$acta_defuncion->archivo}}" name="old_archivo">
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
                                 <input type="file" class="form-control" id="archivo" onchange="previewFile()" accept=".pdf" name="archivo" value="{{$acta_defuncion->archivo}}">
 

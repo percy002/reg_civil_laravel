@@ -106,6 +106,7 @@
                         </div>
                         <div class="col">
                             <div class="card p-3 h-100">
+                                <input type="text " hidden value="{{$acta_matrimonio->archivo}}" name="old_archivo">
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
                                 <input type="file" class="form-control" id="archivo" name="archivo" onchange="previewFile()" accept=".pdf">
 

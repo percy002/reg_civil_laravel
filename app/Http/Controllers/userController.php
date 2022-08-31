@@ -102,6 +102,23 @@ class userController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user=User::find($id);
+        $user->nombres = $request->nombres;
+        $user->apellido_materno = $request->apellido_materno;
+        $user->apellido_paterno = $request->apellido_paterno;
+
+        if ($request->password != "") {
+            # code...
+            $user->password = bcrypt($request->password);
+        }
+        // dd($request->rol);
+        $user->roles()->detach();
+        $user->assignRole($request->rol);
+        // dd($user->getRoleNames());
+        $user->update();
+
+        // dd($user->getRoleNames());
+        return redirect('/usuarios');
     }
 
     /**

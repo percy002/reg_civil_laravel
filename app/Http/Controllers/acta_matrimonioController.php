@@ -169,14 +169,43 @@ class acta_matrimonioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-         $novio = Persona::find($request->id_novio);
-         $novio->fill($request->novio)->save();
+        //agregar el archivo
+        $file = "";
+        $nombre_archivo=$request->old_archivo;
+        if ($request->hasFile('archivo')) {
+            //nombre del archivo
+            $archivo = $request->file('archivo');
+            // dd($archivo);
+            $nombre_archivo="Acta_nac-".$request->dni."-".
+            $request->apellido_paterno."-".
+            $request->apellido_materno."-".
+            $request->nombres."-".
+            \strtotime(Carbon::now()).
+            ".".$archivo->guessExtension();
 
-         $novia = Persona::find($request->id_novia);
-         $novia->fill($request->novia)->save();
- 
- 
+            $url_path="public/actas/Actas_Defunciones";
+            $file = $request->file("archivo")->storeAs($url_path,$nombre_archivo);
+            // dd($file);
+            $nombre_archivo='storage/actas/Actas_Defunciones/'.$nombre_archivo;
+        }
+        //modificar novio
+        $novio = Persona::where('dni',$request->novio_dni)->first();
+        $novio->nombres = $request->nombres_novio;
+        $novio->apellido_paterno = $request->apellido_paterno_novio;
+        $novio->apellido_materno = $request->apellido_materno_novio;
+
+        dd($novio);
+        $novio->update();
+
+
+        //modificar novia
+        $novia = Persona::where('dni',$request->novia_dni)->first();
+        $novia->nombres = $request->nombres_novia;
+        $novia->apellido_paterno = $request->apellido_paterno_novia;
+        $novia->apellido_materno = $request->apellido_materno_novia;
+        $novia->update();
+
+        //modificar acta de matrimonio 
          $acta_matrimonio = Acta_Matrimonio::find($id);
          $acta_matrimonio->fk_id_novio = $novio->id;
          $acta_matrimonio->fk_id_novia = $novia->id;
@@ -185,8 +214,8 @@ class acta_matrimonioController extends Controller
          $acta_matrimonio->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
          $acta_matrimonio->fecha_matrimonio = $request->fecha_matrimonio == null ? NULL : Carbon::parse($request->fecha_matrimonio)->format("Y-m-d");
  
-         $acta_matrimonio->rectificado = $request->rectificado;
-         $acta_matrimonio->archivo = $request->archivo;
+         $acta_matrimonio->rectificado = $request->rectificado == 1? 1:0;
+         $acta_matrimonio->archivo = $nombre_archivo;
  
          $acta_matrimonio->update();
  

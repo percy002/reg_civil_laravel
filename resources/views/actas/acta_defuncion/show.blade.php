@@ -42,7 +42,7 @@
                         <td>{{$acta_defuncion->libro}}</td>
                         <td>{{$acta_defuncion->fecha_registro_format}}</td>
                         <td>{{$acta_defuncion->fecha_fallecimiento_format}}</td>
-                        <td>{{$acta_defuncion->rectificado}}</td>
+                        <td>{{$acta_defuncion->rectificado == 1 ? "Si":"No"}}</td>
                         <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#acta{{$acta_defuncion->id}}">
                                 Ver pdf
