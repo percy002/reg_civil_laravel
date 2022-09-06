@@ -47,7 +47,28 @@
                         <td>{{$acta_nacimiento->fecha_nacimiento_format}}</td>
                         <td>{{$acta_nacimiento->rectificado}}</td>
                         <td>{{$acta_nacimiento->archivo}}
-                            <button type="button" class="btn btn-primary">Ver pdf</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#acta{{$acta_nacimiento->id}}">
+                                Ver pdf
+                              </button>
+                              
+                              <!-- Modal -->
+                              <div class="modal fade" id="acta{{$acta_nacimiento->id}}" tabindex="-1" role="dialog" aria-labelledby="ver_actaTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      {{-- <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5> --}}
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe id="iframe-pdf" width="100%" style="height: 600px" class="pdf_acta p-2" src="{{asset($acta_nacimiento->archivo) }}"  frameborder="0"></iframe>
+
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
                         </td>
                         @can('editor')
                         <td>

@@ -175,7 +175,6 @@ class acta_matrimonioController extends Controller
         if ($request->hasFile('archivo')) {
             //nombre del archivo
             $archivo = $request->file('archivo');
-            // dd($archivo);
             $nombre_archivo="Acta_nac-".$request->dni."-".
             $request->apellido_paterno."-".
             $request->apellido_materno."-".
@@ -189,17 +188,17 @@ class acta_matrimonioController extends Controller
             $nombre_archivo='storage/actas/Actas_Defunciones/'.$nombre_archivo;
         }
         //modificar novio
-        $novio = Persona::where('dni',$request->novio_dni)->first();
+        $novio = Persona::find($request->id_novio);
         $novio->nombres = $request->nombres_novio;
         $novio->apellido_paterno = $request->apellido_paterno_novio;
         $novio->apellido_materno = $request->apellido_materno_novio;
 
-        dd($novio);
+        // dd($novio);
         $novio->update();
 
 
         //modificar novia
-        $novia = Persona::where('dni',$request->novia_dni)->first();
+        $novia = Persona::find($request->id_novia);
         $novia->nombres = $request->nombres_novia;
         $novia->apellido_paterno = $request->apellido_paterno_novia;
         $novia->apellido_materno = $request->apellido_materno_novia;

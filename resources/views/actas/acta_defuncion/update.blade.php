@@ -95,10 +95,13 @@
                         <div class="col">
                             <div class="card p-3 h-100">
                                 <input type="text " hidden value="{{$acta_defuncion->archivo}}" name="old_archivo">
+                                <input type="text " hidden value="{{$acta_defuncion->persona->id}}" name="id_persona">
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
                                 <input type="file" class="form-control" id="archivo" onchange="previewFile()" accept=".pdf" name="archivo" value="{{$acta_defuncion->archivo}}">
+                                <div class="card-body">
 
-                                <iframe id="iframe-pdf" style="height: 100%" class="pdf_acta p-2" src="{{asset($acta_defuncion->archivo) }}" frameborder="0"></iframe>
+                                    <iframe id="iframe-pdf" width="100%" style="height: 600px" class="pdf_acta p-2" src="{{asset($acta_defuncion->archivo) }}"  frameborder="0"></iframe>
+                                </div>
                             </div>
                         </div>
                     </div>

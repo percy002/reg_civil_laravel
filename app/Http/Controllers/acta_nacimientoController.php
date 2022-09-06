@@ -194,30 +194,74 @@ class acta_nacimientoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $nacido = Persona::find($request->id_nacido);
-        $nacido->fill($request->nacido)->save();
+        //agregar el archivo
+        $file = "";
+        $nombre_archivo=$request->old_archivo;
+        if ($request->hasFile('archivo')) {
+            //nombre del archivo
+            $archivo = $request->file('archivo');
+            $nombre_archivo="Acta_nac-".$request->dni."-".
+            $request->apellido_paterno."-".
+            $request->apellido_materno."-".
+            $request->nombres."-".
+            \strtotime(Carbon::now()).
+            ".".$archivo->guessExtension();
 
+            $url_path="public/actas/Actas_Nacimientos";
+            $file = $request->file("archivo")->storeAs($url_path,$nombre_archivo);
+            // dd($file);
+            $nombre_archivo='storage/actas/Actas_Nacimientos/'.$nombre_archivo;
+        }
+        //buscar padre
         $padre = Persona::find($request->id_padre);
-        $padre->fill($request->padre)->save();
+        $padre->nombres = $request->nombres_padre;
+        $padre->apellido_paterno = $request->apellido_paterno_padre;
+        $padre->apellido_materno = $request->apellido_materno_padre;
 
+        $padre->update();
+
+        //buscar madre
         $madre = Persona::find($request->id_madre);
-        $madre->fill($request->madre)->save();
+        $madre->nombres = $request->nombres_madre;
+        $madre->apellido_paterno = $request->apellido_paterno_madre;
+        $madre->apellido_materno = $request->apellido_materno_madre;
+
+        $madre->update();
+
+        //buscar nacido
+        $nacido = Persona::find($request->id_nacido);
+        $nacido->nombres = $request->nombres_nacido;
+        $nacido->apellido_paterno = $request->apellido_paterno_nacido;
+        $nacido->apellido_materno = $request->apellido_materno_nacido;
+        $nacido->sexo=$request->sexo;
+
+        // dd($nacido);
+        $nacido->update();
+
+        // $nacido = Persona::find($request->id_nacido);
+        // $nacido->fill($request->nacido)->save();
+
+        // $padre = Persona::find($request->id_padre);
+        // $padre->fill($request->padre)->save();
+
+        // $madre = Persona::find($request->id_madre);
+        // $madre->fill($request->madre)->save();
 
 
-        $acta_matrimonio = Acta_Nacimiento::find($id);
-        $acta_matrimonio->fk_id_nacido = $nacido->id;
-        $acta_matrimonio->fk_id_padre = $padre->id;
-        $acta_matrimonio->fk_id_madre = $madre->id;
-        $acta_matrimonio->libro = $request->libro;
-        $acta_matrimonio->acta = $request->acta;
-        $acta_matrimonio->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
-        $acta_matrimonio->fecha_nacimiento = $request->fecha_nacimiento == null ? NULL : Carbon::parse($request->fecha_nacimiento)->format("Y-m-d");
+        //editar acta nacimiento
+        $acta_nacimiento = Acta_Nacimiento::find($id);
+        $acta_nacimiento->fk_id_nacido = $nacido->id;
+        $acta_nacimiento->fk_id_padre = $padre->id;
+        $acta_nacimiento->fk_id_madre = $madre->id;
+        $acta_nacimiento->libro = $request->libro;
+        $acta_nacimiento->acta = $request->acta;
+        $acta_nacimiento->fecha_registro = Carbon::parse($request->fecha_registro)->format("Y-m-d");
+        $acta_nacimiento->fecha_nacimiento = $request->fecha_nacimiento == null ? NULL : Carbon::parse($request->fecha_nacimiento)->format("Y-m-d");
 
-        $acta_matrimonio->rectificado = $request->rectificado;
-        $acta_matrimonio->archivo = $request->archivo;
+        $acta_nacimiento->rectificado = $acta_nacimiento->rectificado = $request->rectificado == 1? 1:0;
+        $acta_nacimiento->archivo = $nombre_archivo;
 
-        $acta_matrimonio->update();
+        $acta_nacimiento->update();
 
         // return $acta_matrimonio;
         return redirect('/acta_nacimiento');

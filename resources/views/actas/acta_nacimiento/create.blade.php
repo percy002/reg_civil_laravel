@@ -10,7 +10,7 @@
                 <form action="{{ route('acta_nacimiento.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col">
+                        <div class="col-5">
                             <div class="card p-3 h-100">
 
                                 <div class="acta">

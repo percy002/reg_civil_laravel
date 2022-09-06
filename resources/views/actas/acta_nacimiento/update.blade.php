@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+                                        <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{$acta_nacimiento->fecha_nacimiento}}">
                                         </div>
                                     </div>
                                 </div>                               
@@ -144,6 +144,9 @@
                         <div class="col">
                             <div class="card p-3 h-100">
                                 <input type="text " hidden value="{{$acta_nacimiento->archivo}}" name="old_archivo">
+                                <input type="text " hidden value="{{$acta_nacimiento->padre->id}}" name="id_padre">
+                                <input type="text " hidden value="{{$acta_nacimiento->madre->id}}" name="id_madre">
+                                <input type="text " hidden value="{{$acta_nacimiento->nacido->id}}" name="id_nacido">
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
                                 <input type="file" class="form-control" id="archivo" name="archivo" onchange="previewFile()" accept=".pdf">
 

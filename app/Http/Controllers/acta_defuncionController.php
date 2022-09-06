@@ -177,7 +177,7 @@ class acta_defuncionController extends Controller
             $nombre_archivo='storage/actas/Actas_Defunciones/'.$nombre_archivo;
         }
         //modificar fallecido
-        $persona = Persona::where('dni',$request->dni)->first();
+        $persona = Persona::find($request->id_persona);
         $persona->nombres = $request->nombres;
         $persona->apellido_paterno = $request->apellido_paterno;
         $persona->apellido_materno = $request->apellido_materno;
