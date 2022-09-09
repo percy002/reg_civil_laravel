@@ -24,7 +24,6 @@
                     <th>Dni</th>
                     <th>estado</th>
                     <th>Rol</th>
-                    <th>permisos</th>
                     @can('editor')
                     <th>Opciones</th>
                     @endcan
@@ -38,7 +37,6 @@
                         <td>{{$usuario->dni}}</td>
                         <td>{{$usuario->estado}}</td>
                         <td>{{$usuario->getRoleNames()[0];}}</td>
-                        <td>{{$usuario->getPermissionNames();}}</td>
 
                         @can('editor')
                             

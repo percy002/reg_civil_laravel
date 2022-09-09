@@ -150,7 +150,11 @@
                                 <label for="archivo" class="form-label my-2" >Subir Archivo</label>
                                 <input type="file" class="form-control" id="archivo" name="archivo" onchange="previewFile()" accept=".pdf">
 
-                                <iframe id="iframe-pdf" style="height: 100%" class="pdf_acta p-2" src="http://jornadasciberseguridad.riasc.unileon.es/archivos/ejemplo_esp.pdf"  frameborder="0"></iframe>
+                                <div class="card-body">
+
+                                    <iframe id="iframe-pdf" width="100%" style="height: 600px" class="pdf_acta p-2" src="{{asset($acta_nacimiento->archivo) }}"  frameborder="0"></iframe>
+                                </div>
+                                <!-- <iframe id="iframe-pdf" style="height: 100%" class="pdf_acta p-2" src="http://jornadasciberseguridad.riasc.unileon.es/archivos/ejemplo_esp.pdf"  frameborder="0"></iframe> -->
                             </div>
                         </div>
                     </div>

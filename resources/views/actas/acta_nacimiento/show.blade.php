@@ -45,8 +45,8 @@
                         <td>{{$acta_nacimiento->madre}}</td>
                         <td>{{$acta_nacimiento->fecha_registro_format}}</td>
                         <td>{{$acta_nacimiento->fecha_nacimiento_format}}</td>
-                        <td>{{$acta_nacimiento->rectificado}}</td>
-                        <td>{{$acta_nacimiento->archivo}}
+                        <td>{{$acta_nacimiento->rectificado == 1 ? "Si":"No"}}</td>
+                        <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#acta{{$acta_nacimiento->id}}">
                                 Ver pdf
                               </button>

@@ -41,8 +41,8 @@
                         <td>{{$acta_matrimonio->libro}}</td>
                         <td>{{$acta_matrimonio->fecha_registro_format}}</td>
                         <td>{{$acta_matrimonio->fecha_matrimonio_format}}</td>
-                        <td>{{$acta_matrimonio->rectificado}}</td>
-                        <td>{{$acta_matrimonio->archivo}}
+                        <td>{{$acta_matrimonio->rectificado == 1 ? "Si":"No"}}</td>
+                        <td>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#acta{{$acta_matrimonio->id}}">
                                 Ver pdf
                               </button>

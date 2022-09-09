@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres_padre" name="nombres_padre">
+                                        <input type="text" class="form-control" id="nombres_padre" name="nombres_padre" require>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres_madre" name="nombres_madre">
+                                        <input type="text" class="form-control" id="nombres_madre" name="nombres_madre" require>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -107,7 +107,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres_nacido" name="nombres_nacido">
+                                        <input type="text" class="form-control" id="nombres_nacido" name="nombres_nacido" require>
                                         </div>
                                     </div>
                                     <div class="row">

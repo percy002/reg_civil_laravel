@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres" name="nombres" value="{{$acta_defuncion->persona->nombres}}">
+                                        <input type="text" class="form-control" id="nombres" name="nombres" value="{{$acta_defuncion->persona->nombres}}" require>
                                         </div>
                                     </div>
                                     <div class="row">

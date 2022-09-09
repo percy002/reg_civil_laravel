@@ -28,13 +28,13 @@ class acta_nacimientoController extends Controller
             ->LeftJoin('personas as padre', 'acta_nacimientos.fk_id_padre', '=', 'padre.id')
             ->LeftJoin('personas as madre', 'acta_nacimientos.fk_id_madre', '=', 'madre.id')
             ->select(
-                DB::raw("CONCAT_WS('',nacido.dni,'-',nacido.apellido_paterno,'-',nacido.apellido_materno,'-',nacido.nombres) as nacido"),
-                DB::raw("CONCAT_WS('',padre.dni,'-',padre.apellido_paterno,'-',padre.apellido_materno,'-',padre.nombres) as padre"),
-                DB::raw("CONCAT_WS('',madre.dni,'-',madre.apellido_paterno,'-',madre.apellido_materno,'-',madre.nombres) as madre"),
+                DB::raw("CONCAT_WS('',nacido.dni,'-',nacido.apellido_paterno,' ',nacido.apellido_materno,' ',nacido.nombres) as nacido"),
+                DB::raw("CONCAT_WS('',padre.dni,'-',padre.apellido_paterno,' ',padre.apellido_materno,' ',padre.nombres) as padre"),
+                DB::raw("CONCAT_WS('',madre.dni,'-',madre.apellido_paterno,' ',madre.apellido_materno,' ',madre.nombres) as madre"),
                 'acta_nacimientos.*',
                 'nacido.sexo as sexo',
-                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_registro,'%m/%d/%y')) as fecha_registro_format"),
-                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_nacimiento,'%m/%d/%y')) as fecha_nacimiento_format")
+                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_registro,'%d/%m/%Y')) as fecha_registro_format"),
+                DB::raw("(DATE_FORMAT(acta_nacimientos.fecha_nacimiento,'%d/%m/%Y')) as fecha_nacimiento_format")
             )
             ->get();
         // return Response::json($acta_defunciones);

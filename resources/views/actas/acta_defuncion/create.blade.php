@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="mb-3 col">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres" name="nombres">
+                                        <input type="text" class="form-control" id="nombres" name="nombres" require>
                                         </div>
                                     </div>
                                     <div class="row">

@@ -27,8 +27,8 @@ class acta_matrimonioController extends Controller
             ->LeftJoin('personas as novio', 'acta_matrimonios.fk_id_novio', '=', 'novio.id')
             ->leftJoin('personas as novia', 'acta_matrimonios.fk_id_novia', '=', 'novia.id')
             ->select(
-                DB::raw("CONCAT_WS('',novio.dni,'-',novio.apellido_paterno,'-',novio.apellido_materno,'-',novio.nombres) as novio"),
-                DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,'-',novia.apellido_materno,'-',novia.nombres) as novia"), 'acta_matrimonios.*',DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_registro,'%m/%d/%y')) as fecha_registro_format"),DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_matrimonio,'%m/%d/%y')) as fecha_matrimonio_format"))
+                DB::raw("CONCAT_WS('',novio.dni,'-',novio.apellido_paterno,' ',novio.apellido_materno,' ',novio.nombres) as novio"),
+                DB::raw("CONCAT_WS('',novia.dni,'-',novia.apellido_paterno,' ',novia.apellido_materno,' ',novia.nombres) as novia"), 'acta_matrimonios.*',DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_registro,'%d/%m/%Y')) as fecha_registro_format"),DB::raw("(DATE_FORMAT(acta_matrimonios.fecha_matrimonio,'%d/%m/%Y')) as fecha_matrimonio_format"))
                 ->get();
         // return Response::json($acta_defunciones);
         return view('actas.acta_matrimonio.show',compact("acta_matrimonios"));

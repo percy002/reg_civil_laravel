@@ -26,7 +26,7 @@ class acta_defuncionController extends Controller
         //
         $acta_defunciones = DB::table('acta_defuncions')
             ->LeftJoin('personas', 'acta_defuncions.fk_id_fallecido', '=', 'personas.id')
-            ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,'-',personas.apellido_materno,'-',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*',DB::raw("(DATE_FORMAT(acta_defuncions.fecha_defuncion,'%m/%d/%y')) as fecha_fallecimiento_format"),DB::raw("(DATE_FORMAT(acta_defuncions.fecha_registro,'%m/%d/%y')) as fecha_registro_format"))
+            ->select(DB::raw("CONCAT_WS('',personas.dni,'-',personas.apellido_paterno,' ',personas.apellido_materno,' ',personas.nombres) as fallecido"), 'personas.sexo', 'acta_defuncions.*',DB::raw("(DATE_FORMAT(acta_defuncions.fecha_defuncion,'%d/%m/%Y')) as fecha_fallecimiento_format"),DB::raw("(DATE_FORMAT(acta_defuncions.fecha_registro,'%d/%m/%Y')) as fecha_registro_format"))
             ->get();
 
         return view('actas.acta_defuncion.show',compact("acta_defunciones"));
